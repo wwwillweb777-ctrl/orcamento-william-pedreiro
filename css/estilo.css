@@ -1,1 +1,427 @@
+/* ==============================================
+   ESTILO GERAL - WILLIAM PEDREIRO ORÇAMENTO
+   ============================================== */
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f0f4f8;
+    padding: 10px;
+}
+
+.pagina {
+    max-width: 450px;
+    margin: 0 auto;
+    background: #002f6c !important;
+    background-color: #002f6c !important;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-top: 4px solid #D4AF37;
+}
+
+.oculta {
+    display: none !important;
+}
+
+/* ---------- CABEÇALHO ---------- */
+.cabecalho {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.leao-cabeca {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #D4AF37;
+}
+
+.info-contato p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+/* ---------- ANIMAÇÕES ---------- */
+@keyframes piscar {
+    from { background: #25d366; }
+    to { background: #128c7e; }
+}
+
+@keyframes piscarAzul {
+    from { background: #0047ab; }
+    to { background: #002f6c; }
+}
+
+@keyframes aparecer {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- TÍTULOS ---------- */
+h1 {
+    font-size: 26px;
+    color: #ffffff;
+    text-align: center;
+    margin: 15px 0;
+}
+
+/* ---------- CAIXA INICIAL ---------- */
+.info-inicial {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+.info-inicial strong {
+    color: #D4AF37;
+}
+
+/* ---------- AVISO SENHA ---------- */
+.aviso-senha {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #D4AF37;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    text-align: center;
+    color: #ffffff;
+}
+
+.aviso-senha strong {
+    display: block;
+    font-size: 20px;
+    color: #D4AF37;
+    margin-bottom: 10px;
+}
+
+/* ---------- BOTÕES ---------- */
+.btn {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffffff;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.btn-comecar {
+    background: #25d366;
+    font-size: 22px;
+}
+
+.btn-servico {
+    background: #0047ab;
+    text-align: left;
+    border: 1px solid #D4AF37;
+}
+
+.btn-calcular, .btn-enviar {
+    background: #f57c00;
+}
+
+.btn-proximo {
+    background: #28a745;
+}
+
+.btn-voltar {
+    background: #d32f2f;
+}
+
+.btn-salvar {
+    background: #17a2b8;
+}
+
+.btn-ja-paguei {
+    animation: piscarAzul 0.8s infinite alternate;
+    font-size: 22px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.5);
+    border: 2px solid #ffffff;
+}
+
+/* ---------- INPUTS E TEXTOS ---------- */
+input, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #D4AF37;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 15px;
+    background: rgba(255,255,255,0.9);
+}
+
+label {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+/* ---------- AVISO WHATSAPP ---------- */
+.aviso-zap {
+    background: rgba(37, 211, 102, 0.2);
+    border: 2px solid #25d366;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+}
+
+/* ---------- ÁREA PIX ---------- */
+.area-pix {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.container-logo-valor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.logo-pix {
+    width: 120px;
+}
+
+.valor-pix {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.area-pix .instrucao {
+    color: #ffffff;
+    font-size: 18px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.caixa-chave {
+    background: #ffffff;
+    border: 3px solid #002f6c;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.chave-pix {
+    background: #D4AF37;
+    color: #000000;
+    padding: 12px;
+    border-radius: 8px;
+    font-family: monospace;
+    font-size: 17px;
+    word-break: break-all;
+    border: 2px solid #000;
+}
+
+/* ---------- IMAGEM TOPO ---------- */
+.img-topo-lib {
+    width: 100%;
+    max-width: 200px;
+    display: block;
+    margin: 0 auto 20px auto;
+    border-radius: 10px;
+    border: 3px solid #D4AF37;
+}
+
+/* ---------- CAMPO WHATSAPP ---------- */
+.campo-whats {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #D4AF37;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.campo-whats label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+/* ---------- REGRAS DE CONVERSÃO ---------- */
+.regra-importante {
+    background: rgba(255, 200, 0, 0.2);
+    border: 2px solid #ffcc00;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    color: #fff;
+}
+
+.aviso-erro {
+    background: rgba(255, 0, 0, 0.2);
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 13px;
+    text-align: center;
+    color: #fff;
+}
+
+.correto {
+    color: #00FF00;
+    font-weight: bold;
+}
+
+.errado {
+    color: #FF4444;
+    font-weight: bold;
+    text-decoration: line-through;
+}
+
+.tabela-conversao {
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 15px 0;
+}
+
+.linha {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    font-size: 13px;
+    color: #fff;
+}
+
+.medida, .material {
+    font-weight: bold;
+    color: #D4AF37;
+}
+
+/* ---------- INFO REBOCO / CONCRETO ---------- */
+#info-reboco, #info-resistencia {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #D4AF37;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.aviso-regra-preco {
+    background: rgba(212, 175, 55, 0.2);
+    border: 2px solid #D4AF37;
+    border-radius: 10px;
+    padding: 12px;
+    margin: 15px 0;
+    text-align: center;
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+/* ---------- CALCULADORA DE TIJOLOS ---------- */
+.info-medida {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #D4AF37;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.info-tijolo {
+    background: rgba(150, 75, 0, 0.3);
+    border: 2px solid #ff9900;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0;
+    text-align: center;
+    line-height: 1.8;
+    font-size: 16px;
+    color: #fff;
+}
+
+/* ---------- RESULTADO ---------- */
+.resultado {
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 25px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 2;
+    color: #ffffff !important;
+    animation: aparecer 0.1s ease-out;
+}
+
+.resultado p {
+    color: #ffffff !important;
+    font-size: 22px !important;
+}
+
+.valor-final {
+    color: #0f0 !important;
+    font-weight: bold !important;
+    font-size: 26px !important;
+}
+
+/* ---------- MATERIAIS ---------- */
+.tabela-materiais {
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 10px;
+    margin: 15px 0;
+}
+
+.dica {
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid #0f0;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 10px 0;
+    font-size: 13px;
+    color: #fff;
+    line-height: 1.8;
+}
+
+/* ---------- TEXTO EXPLICATIVO ---------- */
+.texto-explicativo {
+    text-align: center;
+    font-size: 14px;
+    color: #D4AF37;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+
+/* ---------- RESPONSIVIDADE ---------- */
+@media (max-width: 400px) {
+    .pagina { padding: 15px; }
+    h1 { font-size: 22px; }
+    .btn { font-size: 18px; padding: 12px; }
+    .cabecalho { flex-direction: column; text-align: center; }
+}
