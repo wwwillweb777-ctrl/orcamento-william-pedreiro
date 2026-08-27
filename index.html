@@ -43,7 +43,6 @@
         <button class="btn btn-servico" onclick="irPara('servicos/04-ceramica.html')">4 - CERÂMICA (R$40,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/05-concreto.html')">5 - CONCRETO (R$200,00/M³)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/06-gesso.html')">6 - GESSO (R$20,00/M²)</button>
-        <!-- ✅ CORREÇÃO 1: Adicionado o número 7 -->
         <button class="btn btn-servico" onclick="irPara('servicos/07-tijolos.html')">7 - 🧱 CALC. QUANTIDADE DE TIJOLOS</button>
         <button class="btn btn-voltar" onclick="voltarParaPrincipal()">VOLTAR</button>
     </div>
@@ -64,7 +63,6 @@
             <p class="instrucao">👉 Clique para copiar a chave!</p>
             <div class="caixa-chave">
                 <p class="chave-pix">williamempreiteiro007@gmail.com</p>
-                <!-- ✅ CORREÇÃO 2: Cor do texto preta definida aqui -->
                 <button class="btn btn-copiar-pix" onclick="copiarPix()" style="color: #000000; font-weight: bold;">📋 COPIAR CHAVE PIX</button>
             </div>
         </div>
@@ -93,7 +91,13 @@
             window.scrollTo(0, 0);
         }
 
-        function comecar() { mostrarPagina('pg-servicos'); }
+        // ✅ CORREÇÃO: Ao começar NOVO orçamento, LIMPA os dados antigos!
+        function comecar() {
+            // 🧹 LIMPA orçamentos anteriores — começa do zero!
+            localStorage.removeItem('orcamentoCompleto');
+            mostrarPagina('pg-servicos');
+        }
+
         function voltarParaPrincipal() { mostrarPagina('pg-principal'); }
         function voltarParaServicos() { mostrarPagina('pg-servicos'); }
 
