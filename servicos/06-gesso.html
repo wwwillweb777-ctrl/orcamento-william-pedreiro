@@ -111,16 +111,16 @@
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ FINALIZAR E ENVIAR ORÇAMENTO</button>
     </div>
 
-    <button class="btn btn-finalizar" onclick="irParaResumo()">📊 VER RESUMO GERAL</button>
+    <!-- ✅ BOTÃO CORRIGIDO — VAI DIRETO PARA O RESUMO GERAL! -->
+    <button class="btn btn-finalizar" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
     <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
 </div>
 
 <script>
-const PRECO_M2 = 20; // ✅ PREÇO FIXO: R$ 20,00 por m²
+const PRECO_M2 = 20;
 const SEU_NUMERO = "5531990721928";
-const TOTAL_ETAPAS = 6; // Último serviço
+const TOTAL_ETAPAS = 6;
 
-let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
 let dadosSalvos = null;
 
 function obterValor(id) {
@@ -144,15 +144,12 @@ function calcular() {
         return;
     }
 
-    // ✅ COMPRIMENTO × ALTURA = ÁREA × PREÇO/m² — MESMA LÓGICA!
     const area = larg * alt;
-    const valorFinal = area * PRECO_M2; // R$ 20,00 × m²
+    const valorFinal = area * PRECO_M2;
 
-    // 📦 Cálculo aproximado de materiais
-    const sacosGesso = Math.ceil(area * 0.8); // ~0,8 saco por m²
-    const chapas = Math.ceil(area * 1.05); // +5% de perda
+    const sacosGesso = Math.ceil(area * 0.8);
+    const chapas = Math.ceil(area * 1.05);
 
-    // ✅ EXIBE — 1m × 1m = 1m² → R$ 20,00!
     document.getElementById('area').textContent = formatarNumero(area) + ' m²';
     document.getElementById('valor').textContent = 'R$ ' + formatarNumero(valorFinal);
     document.getElementById('qtd-gesso').textContent = sacosGesso + ' sacos de 20kg';
@@ -164,11 +161,7 @@ function calcular() {
     dadosSalvos = {
         servico: "GESSO",
         medida: formatarNumero(area) + ' m²',
-        valor: 'R$ ' + formatarNumero(valorFinal),
-        materiais: {
-            gesso: sacosGesso + ' sacos',
-            chapas: chapas + ' chapas'
-        }
+        valor: 'R$ ' + formatarNumero(valorFinal)
     };
 }
 
@@ -177,7 +170,7 @@ function salvarItem() {
         alert("⚠️ Calcule primeiro antes de salvar!");
         return;
     }
-    dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     dadosAcumulados.push({ ...dadosSalvos });
     localStorage.setItem('orcamentoCompleto', JSON.stringify(dadosAcumulados));
     alert(`✅ SALVO! Total de serviços: ${dadosAcumulados.length} de ${TOTAL_ETAPAS}`);
@@ -221,7 +214,6 @@ function enviarWhatsApp() {
         mensagem += `\n${index + 1}. *${servico.servico}*\n`;
         mensagem += `   📏 Medida: ${servico.medida}\n`;
         mensagem += `   💰 Valor: ${servico.valor}\n`;
-        // Soma o valor total
         const valorNum = parseFloat(servico.valor.replace('R$ ', '').replace('.', '').replace(',', '.'));
         if(!isNaN(valorNum)) valorTotalGeral += valorNum;
     });
@@ -229,20 +221,13 @@ function enviarWhatsApp() {
     mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
     mensagem += `💵 *VALOR TOTAL: R$ ${valorTotalGeral.toLocaleString('pt-BR', {minimumFractionDigits:2})}*`;
 
-    // Envia para o cliente
     window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`, '_blank');
     
-    // Envia cópia para você
     setTimeout(() => {
         window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
     }, 800);
     
-    alert("✅ Orçamento completo enviado! Parabéns, todos os serviços finalizados!");
-}
-
-function irParaResumo() {
-    salvarItem();
-    alert("📊 Resumo em construção! Todos os serviços salvos com sucesso!");
+    alert("✅ Orçamento completo enviado!");
 }
 
 function voltar() {
@@ -251,5 +236,4 @@ function voltar() {
 </script>
 
 </body>
-      </html>
-      
+</html>
