@@ -10,7 +10,6 @@
         .pagina { max-width: 450px; margin: 0 auto; background: #002f6c; padding: 20px; border-radius: 20px; border-top: 4px solid #D4AF37; color: #fff; }
         h1 { font-size: 26px; color: #fff; text-align: center; margin-bottom: 20px; }
         
-        /* REGRAS DE CONVERSÃO */
         .regra-importante { background: rgba(255,200,0,0.2); border: 2px solid #ffcc00; padding: 12px; border-radius: 8px; margin: 15px 0; font-size: 14px; text-align: center; font-weight: bold; color: #fff; }
         .aviso-erro { background: rgba(255,0,0,0.2); border: 1px solid red; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px; text-align: center; color: #fff; }
         .correto { color: #0f0; font-weight: bold; }
@@ -19,33 +18,27 @@
         .linha { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 13px; color: #fff; }
         .medida { font-weight: bold; color: #D4AF37; }
         
-        /* CAMPOS */
         label { font-weight: bold; color: #fff; display: block; margin-bottom: 5px; margin-top: 15px; }
         input { width: 100%; padding: 12px; border: 2px solid #D4AF37; border-radius: 8px; font-size: 16px; margin-bottom: 10px; background: rgba(255,255,255,0.9); }
         
-        /* BOTÕES — TODOS COM CORES + NOVO BOTÃO WHATSAPP */
         .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #fff; cursor: pointer; margin-top: 10px; }
-        .btn-calcular { background: #ff8800; color: #fff; }    /* 🟠 LARANJA */
-        .btn-salvar { background: #17a2b8; color: #fff; }       /* 🔵 AZUL */
-        .btn-whatsapp { background: #25d366; color: #fff; }     /* 🟩 VERDE WHATSAPP — NOVO! */
-        .btn-proximo { background: #28a745; color: #fff; }      /* 🟢 VERDE */
-        .btn-voltar { background: #d32f2f; color: #fff; }       /* 🔴 VERMELHO */
+        .btn-calcular { background: #ff8800; }
+        .btn-salvar { background: #17a2b8; }
+        .btn-whatsapp { background: #25d366; }
+        .btn-proximo { background: #28a745; }
+        .btn-voltar { background: #d32f2f; }
         
-        /* RESULTADO — PADRÃO BRASILEIRO */
         .resultado { background: rgba(0,0,0,0.3); border: 2px solid #ffcc00; border-radius: 10px; padding: 20px; margin-top: 25px; text-align: center; font-size: 20px; line-height: 2; color: #fff; display: none; }
         .valor-final { color: #0f0; font-weight: bold; font-size: 28px; }
         .preco-unitario { color: #ffd700; font-size: 16px; }
         
-        /* MATERIAIS */
         .tabela-materiais { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; margin: 20px 0; display: block; }
         .titulo-materiais { color: #ffd700; font-size: 22px; font-weight: bold; text-align: center; margin-bottom: 15px; }
         .item-material { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.15); font-size: 16px; }
         .nome-material { color: #ffd700; }
         
-        /* DICAS */
         .dica { background: rgba(0,255,0,0.1); border: 1px solid #0f0; padding: 15px; border-radius: 8px; margin: 20px 0; font-size: 15px; color: #fff; line-height: 1.8; }
         
-        /* CAMPO WHATSAPP */
         .campo-whats { background: rgba(255,255,255,0.1); border: 2px solid #25d366; border-radius: 10px; padding: 15px; margin-top: 20px; display: none; }
         .campo-whats label { margin-top: 0; color: #25d366; }
     </style>
@@ -79,10 +72,8 @@
     <label>📏 Altura (metros):</label>
     <input type="text" id="altura" placeholder="Ex: 2,80">
 
-    <!-- 🟠 BOTÃO CALCULAR -->
     <button class="btn btn-calcular" onclick="calcular()">CALCULAR VALOR</button>
 
-    <!-- RESULTADO — PADRÃO BRASILEIRO -->
     <div class="resultado" id="resultado">
         <p><strong>Serviço:</strong> ALVENARIA</p>
         <p><strong>Área Total:</strong> <span id="area" class="valor-final">0,00</span> m²</p>
@@ -90,7 +81,6 @@
         <p><strong>Valor Total:</strong> <span id="valor" class="valor-final">R$ 0,00</span></p>
     </div>
 
-    <!-- 📦 MATERIAIS -->
     <div class="tabela-materiais">
         <p class="titulo-materiais">📦 MATERIAIS NECESSÁRIOS</p>
         <div class="item-material">
@@ -115,38 +105,33 @@
         • Considerar altura de viga e pingadeira
     </div>
 
-    <!-- 🔵 BOTÃO SALVAR -->
     <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
-
-    <!-- 🟩 NOVO BOTÃO: ENVIAR PELO WHATSAPP -->
     <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
 
-    <!-- CAMPO WHATSAPP — APARECE AO CLICAR EM ENVIAR -->
     <div class="campo-whats" id="area-whats">
         <label>📱 Seu WhatsApp:</label>
         <input type="tel" id="whats-cliente" placeholder="Ex: 31999998888">
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ CONFIRMAR E ENVIAR</button>
     </div>
 
-    <!-- 🟢 BOTÃO PRÓXIMO -->
     <button class="btn btn-proximo" onclick="irParaProximo()">➡️ PRÓXIMO</button>
-
-    <!-- 🔴 BOTÃO VOLTAR -->
     <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
 </div>
 
 <script>
-const PRECO_M2 = 52; // R$ 52,00 por m²
-const SEU_NUMERO = "5531990721928"; // Seu WhatsApp com DDD
+const PRECO_M2 = 52;
+const SEU_NUMERO = "5531990721928";
+const TOTAL_ETAPAS = 7;
+
+// ✅ LÊ O QUE JÁ FOI SALVO ANTES — NUNCA COMEÇA DO ZERO!
+let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
 let dadosSalvos = null;
 
-// PEGA VALOR E CONVERTE VÍRGULA PARA PONTO
 function obterValor(id) {
     const valor = document.getElementById(id).value.replace(',', '.');
     return parseFloat(valor) || 0;
 }
 
-// ✅ FORMATAÇÃO BRASILEIRA: 1.144,00
 function formatarNumero(valor, decimais = 2) {
     return valor.toLocaleString('pt-BR', { 
         minimumFractionDigits: decimais, 
@@ -166,76 +151,89 @@ function calcular() {
     const area = larg * alt;
     const valor = area * PRECO_M2;
 
-    // EXIBE NO PADRÃO BRASILEIRO
     document.getElementById('area').textContent = formatarNumero(area) + ' m²';
     document.getElementById('valor').textContent = 'R$ ' + formatarNumero(valor);
-    
     document.getElementById('resultado').style.display = 'block';
 
     dadosSalvos = {
         servico: "ALVENARIA",
-        largura: formatarNumero(larg) + ' m',
-        altura: formatarNumero(alt) + ' m',
-        area: formatarNumero(area) + ' m²',
-        precoUnitario: 'R$ 52,00/m²',
-        valorTotal: 'R$ ' + formatarNumero(valor)
+        medida: formatarNumero(area) + ' m²',
+        valor: 'R$ ' + formatarNumero(valor),
+        materiais: {
+            tijolos: "Conforme medida",
+            argamassa: "Conforme projeto",
+            pedra: "Conforme projeto"
+        }
     };
 }
 
+// ✅ SALVAR — ADICIONA SEM APAGAR OS ANTERIORES!
 function salvarItem() {
     if(!dadosSalvos) {
         alert("⚠️ Calcule primeiro antes de salvar!");
         return;
     }
-    localStorage.setItem('ultimoServico', JSON.stringify(dadosSalvos));
-    alert("✅ SALVO COM SUCESSO! As informações ficam salvas aqui.");
+    // LÊ NOVAMENTE PARA NÃO PERDER NADA
+    dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    // ADICIONA O ATUAL NO FINAL
+    dadosAcumulados.push({ ...dadosSalvos });
+    // SALVA TUDO
+    localStorage.setItem('orcamentoCompleto', JSON.stringify(dadosAcumulados));
+    alert(`✅ SALVO! Total de serviços: ${dadosAcumulados.length}`);
 }
 
-// 📲 MOSTRA O CAMPO DE WHATSAPP
 function mostrarCampoWhatsApp() {
-    if(!dadosSalvos) {
-        alert("⚠️ Calcule o orçamento primeiro!");
+    const todos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    if(todos.length === 0 && !dadosSalvos) {
+        alert("⚠️ Calcule e salve pelo menos um serviço antes de enviar!");
         return;
     }
     document.getElementById('area-whats').style.display = 'block';
     document.getElementById('area-whats').scrollIntoView({ behavior: 'smooth' });
 }
 
-// ✅ ENVIA TUDO PELO WHATSAPP
+// ✅ ENVIA TUDO O QUE FOI SALVO — DE TODAS AS PÁGINAS!
 function enviarWhatsApp() {
     const numero = document.getElementById('whats-cliente').value.replace(/\D/g, '');
-    
     if(numero.length < 10) {
         alert("⚠️ Digite seu WhatsApp com DDD! Ex: 31999998888");
         return;
     }
 
-    // MENSAGEM COMPLETA COM TODAS AS INFORMAÇÕES
-    const mensagem = `📋 *ORÇAMENTO — ALVENARIA*
-━━━━━━━━━━━━━━━━━━
-📏 *Comprimento:* ${dadosSalvos.largura}
-📏 *Altura:* ${dadosSalvos.altura}
-📐 *Área Total:* ${dadosSalvos.area}
-💰 *Preço/m²:* ${dadosSalvos.precoUnitario}
-💵 *VALOR TOTAL:* ${dadosSalvos.valorTotal}
-━━━━━━━━━━━━━━━━━━
-📦 *MATERIAIS:*
-• Tijolos / Blocos → Conforme medida
-• Argamassa → Conforme projeto
-• Pedra / Fundação → Conforme projeto
-━━━━━━━━━━━━━━━━━━
-📱 Solicitado por: ${numero}`;
-
-    // ABRE O WHATSAPP COM A MENSAGEM PRONTA
-    window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
-    alert("✅ Abrindo WhatsApp... Pronto para enviar!");
-}
-
-function irParaProximo() {
-    if(!dadosSalvos) {
-        alert("⚠️ Calcule e salve antes de prosseguir!");
+    // PEGA TUDO QUE FOI SALVO EM TODAS AS ETAPAS
+    const todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    
+    if(todosOsServicos.length === 0 && !dadosSalvos) {
+        alert("⚠️ Salve pelo menos um serviço!");
         return;
     }
+
+    // Se tem o atual mas não está salvo ainda, inclui
+    if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico)) {
+        todosOsServicos.push(dadosSalvos);
+    }
+
+    // ✅ MONTA A MENSAGEM COMPLETA
+    let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
+    mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    mensagem += `👤 *Cliente:* ${numero}\n\n`;
+    mensagem += `📌 *SERVIÇOS:*\n`;
+
+    todosOsServicos.forEach((servico, index) => {
+        mensagem += `\n${index + 1}. *${servico.servico}*\n`;
+        mensagem += `   📏 Medida: ${servico.medida}\n`;
+        mensagem += `   💰 Valor: ${servico.valor}\n`;
+    });
+
+    mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+    window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
+    alert("✅ Orçamento completo! Abrindo WhatsApp...");
+}
+
+// ✅ PRÓXIMO = SÓ AVANÇA, NÃO FORÇA SALVAR!
+function irParaProximo() {
+    // Não precisa verificar se salvou — o cliente decide!
     window.location.href = "02-reboco.html";
 }
 
