@@ -121,10 +121,7 @@
 <script>
 const PRECO_M2 = 52;
 const SEU_NUMERO = "5531990721928";
-const TOTAL_ETAPAS = 7;
 
-// ✅ LÊ O QUE JÁ FOI SALVO ANTES — NUNCA COMEÇA DO ZERO!
-let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
 let dadosSalvos = null;
 
 function obterValor(id) {
@@ -158,26 +155,17 @@ function calcular() {
     dadosSalvos = {
         servico: "ALVENARIA",
         medida: formatarNumero(area) + ' m²',
-        valor: 'R$ ' + formatarNumero(valor),
-        materiais: {
-            tijolos: "Conforme medida",
-            argamassa: "Conforme projeto",
-            pedra: "Conforme projeto"
-        }
+        valor: 'R$ ' + formatarNumero(valor)
     };
 }
 
-// ✅ SALVAR — ADICIONA SEM APAGAR OS ANTERIORES!
 function salvarItem() {
     if(!dadosSalvos) {
         alert("⚠️ Calcule primeiro antes de salvar!");
         return;
     }
-    // LÊ NOVAMENTE PARA NÃO PERDER NADA
-    dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
-    // ADICIONA O ATUAL NO FINAL
+    let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     dadosAcumulados.push({ ...dadosSalvos });
-    // SALVA TUDO
     localStorage.setItem('orcamentoCompleto', JSON.stringify(dadosAcumulados));
     alert(`✅ SALVO! Total de serviços: ${dadosAcumulados.length}`);
 }
@@ -192,7 +180,6 @@ function mostrarCampoWhatsApp() {
     document.getElementById('area-whats').scrollIntoView({ behavior: 'smooth' });
 }
 
-// ✅ ENVIA TUDO O QUE FOI SALVO — DE TODAS AS PÁGINAS!
 function enviarWhatsApp() {
     const numero = document.getElementById('whats-cliente').value.replace(/\D/g, '');
     if(numero.length < 10) {
@@ -200,7 +187,6 @@ function enviarWhatsApp() {
         return;
     }
 
-    // PEGA TUDO QUE FOI SALVO EM TODAS AS ETAPAS
     const todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     
     if(todosOsServicos.length === 0 && !dadosSalvos) {
@@ -208,12 +194,10 @@ function enviarWhatsApp() {
         return;
     }
 
-    // Se tem o atual mas não está salvo ainda, inclui
     if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico)) {
         todosOsServicos.push(dadosSalvos);
     }
 
-    // ✅ MONTA A MENSAGEM COMPLETA
     let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
     mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
     mensagem += `👤 *Cliente:* ${numero}\n\n`;
@@ -231,9 +215,7 @@ function enviarWhatsApp() {
     alert("✅ Orçamento completo! Abrindo WhatsApp...");
 }
 
-// ✅ PRÓXIMO = SÓ AVANÇA, NÃO FORÇA SALVAR!
 function irParaProximo() {
-    // Não precisa verificar se salvou — o cliente decide!
     window.location.href = "02-reboco.html";
 }
 
