@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Tijolos - William Pedreiro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f0f4f8; padding: 10px; }
+        .pagina { max-width: 450px; margin: 0 auto; background: #002f6c; padding: 20px; border-radius: 20px; border-top: 4px solid #D4AF37; color: #fff; }
+        h1 { font-size: 26px; color: #fff; text-align: center; margin-bottom: 20px; }
+        
+        .info-medida {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #D4AF37;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+        }
+        .info-tijolo {
+            background: rgba(150, 75, 0, 0.3);
+            border: 2px solid #ff9900;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            line-height: 1.8;
+            font-size: 16px;
+            color: #fff;
+        }
+        
+        label { font-weight: bold; color: #fff; display: block; margin-bottom: 5px; margin-top: 15px; }
+        input { width: 100%; padding: 12px; border: 2px solid #D4AF37; border-radius: 8px; font-size: 16px; margin-bottom: 10px; background: rgba(255,255,255,0.9); }
+        
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #fff; cursor: pointer; margin-top: 10px; }
+        .btn-calcular { background: #ff8800; }
+        .btn-voltar { background: #d32f2f; }
+        
+        .resultado {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #ffcc00;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 25px;
+            text-align: center;
+            font-size: 20px;
+            line-height: 2;
+            color: #fff;
+            display: none;
+        }
+        .valor-final { color: #0f0; font-weight: bold; font-size: 26px; }
+    </style>
+</head>
+<body>
+
+<div class="pagina">
+    <h1>🧱 CALCULADORA DE TIJOLOS</h1>
+
+    <div class="info-medida">
+        <strong>CÁLCULO PARA PAREDES</strong><br>
+        ✅ HORIZONTAL × VERTICAL = ÁREA EM M²
+    </div>
+
+    <div class="info-tijolo">
+        <strong>🧱 TIJOLO DE 10 cm</strong><br>
+        • Altura: 19 cm | Largura: 29 cm<br>
+        • <strong>1 M² ≈ 18 TIJOLOS</strong>
+    </div>
+
+    <div class="info-tijolo">
+        <strong>🧱 TIJOLO DE 15 cm</strong><br>
+        • Altura: 14 cm | Largura: 29 cm<br>
+        • <strong>1 M² ≈ 21 TIJOLOS</strong>
+    </div>
+
+    <div class="info-tijolo">
+        <strong>⬜ BLOCO DE CONCRETO</strong><br>
+        • Altura: 19 cm | Largura: 39 cm<br>
+        • <strong>1 M² ≈ 13 BLOCOS</strong>
+    </div>
+
+    <label>📏 Medida Horizontal (Comprimento):</label>
+    <input type="text" id="medida1" placeholder="Ex: 5,00 metros">
+
+    <label>📏 Medida Vertical (Altura):</label>
+    <input type="text" id="medida2" placeholder="Ex: 2,80 metros">
+
+    <button class="btn btn-calcular" onclick="calcularTijolos()">📐 CALCULAR QUANTIDADE</button>
+
+    <div class="resultado" id="areaResultado">
+        <p><strong>📏 Área Total da Parede:</strong><br>
+        <span class="valor-final" id="metragem">0,00</span> m²</p>
+        <hr style="border-color: #ffcc00; margin: 10px 0;">
+        <p><strong>🧱 Tijolo 10 cm:</strong><br>
+        <span class="valor-final" id="qtde10">0</span> unidades</p>
+        <p><strong>🧱 Tijolo 15 cm:</strong><br>
+        <span class="valor-final" id="qtde15">0</span> unidades</p>
+        <p><strong>⬜ Bloco de Concreto:</strong><br>
+        <span class="valor-final" id="qtdeBlocos">0</span> unidades</p>
+        <p style="font-size: 14px; color: #aaa; margin-top: 15px;">* Considere comprar 5% a mais para perdas e recortes</p>
+    </div>
+
+    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
+</div>
+
+<script>
+function obterValor(id) {
+    const valor = document.getElementById(id).value.replace(',', '.');
+    return parseFloat(valor) || 0;
+}
+
+function calcularTijolos() {
+    const larg = obterValor('medida1');
+    const alt = obterValor('medida2');
+
+    if(larg <= 0 || alt <= 0) {
+        alert("⚠️ Digite medidas válidas maiores que zero!");
+        return;
+    }
+
+    const area = larg * alt;
+    
+    document.getElementById('metragem').textContent = area.toFixed(2).replace('.', ',');
+    document.getElementById('qtde10').textContent = Math.ceil(area * 18);
+    document.getElementById('qtde15').textContent = Math.ceil(area * 21);
+    document.getElementById('qtdeBlocos').textContent = Math.ceil(area * 13);
+
+    document.getElementById('areaResultado').style.display = 'block';
+    document.getElementById('areaResultado').scrollIntoView({ behavior: 'smooth' });
+}
+
+function voltar() {
+    window.history.back();
+}
+</script>
+
+</body>
+</html>
