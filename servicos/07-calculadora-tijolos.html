@@ -41,7 +41,7 @@
         .btn-salvar { background: #17a2b8; }
         .btn-whatsapp { background: #25d366; }
         .btn-resumo { background: #6f42c1; }
-        .btn-proximo { background: #007bff; } /* AZUL — PRÓXIMO */
+        .btn-proximo { background: #007bff; }
         .btn-voltar { background: #d32f2f; }
         
         .resultado {
@@ -68,13 +68,6 @@
             display: none;
         }
         .campo-whats label { margin-top: 0; color: #25d366; }
-        
-        .botoes-navegacao {
-            display: flex;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .botoes-navegacao .btn { flex: 1; }
     </style>
 </head>
 <body>
@@ -130,8 +123,8 @@
     <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
     <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
 
-    <!-- ✅ BOTÃO PRÓXIMO → GESSO -->
-    <button class="btn btn-proximo" onclick="window.location.href='06-gesso.html'">➡️ PRÓXIMO: GESSO</button>
+    <!-- ✅ BOTÃO PRÓXIMO → GESSO (SÓ "PRÓXIMO") -->
+    <button class="btn btn-proximo" onclick="window.location.href='06-gesso.html'">PRÓXIMO</button>
 
     <div class="campo-whats" id="area-whats">
         <label>📱 Seu WhatsApp:</label>
@@ -139,7 +132,8 @@
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ CONFIRMAR E ENVIAR</button>
     </div>
 
-    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
+    <!-- ✅ BOTÃO VOLTAR → CONCRETO (fixo, não depende de histórico) -->
+    <button class="btn btn-voltar" onclick="window.location.href='05-concreto.html'">VOLTAR</button>
 </div>
 
 <script>
@@ -244,10 +238,6 @@ function enviarWhatsApp() {
 
     window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
     alert("✅ Orçamento completo! Abrindo WhatsApp...");
-}
-
-function voltar() {
-    window.history.back();
 }
 </script>
 
