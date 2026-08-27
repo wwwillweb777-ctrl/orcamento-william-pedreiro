@@ -43,7 +43,8 @@
         <button class="btn btn-servico" onclick="irPara('servicos/04-ceramica.html')">4 - CERÂMICA (R$40,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/05-concreto.html')">5 - CONCRETO (R$200,00/M³)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/06-gesso.html')">6 - GESSO (R$20,00/M²)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/07-tijolos.html')">🧱 CALC. QUANTIDADE DE TIJOLOS</button>
+        <!-- ✅ CORREÇÃO 1: Adicionado o número 7 -->
+        <button class="btn btn-servico" onclick="irPara('servicos/07-tijolos.html')">7 - 🧱 CALC. QUANTIDADE DE TIJOLOS</button>
         <button class="btn btn-voltar" onclick="voltarParaPrincipal()">VOLTAR</button>
     </div>
 
@@ -63,7 +64,8 @@
             <p class="instrucao">👉 Clique para copiar a chave!</p>
             <div class="caixa-chave">
                 <p class="chave-pix">williamempreiteiro007@gmail.com</p>
-                <button class="btn" onclick="copiarPix()">📋 COPIAR CHAVE PIX</button>
+                <!-- ✅ CORREÇÃO 2: Cor do texto preta definida aqui -->
+                <button class="btn btn-copiar-pix" onclick="copiarPix()" style="color: #000000; font-weight: bold;">📋 COPIAR CHAVE PIX</button>
             </div>
         </div>
         <div class="campo-whats">
@@ -76,17 +78,13 @@
         <button class="btn btn-voltar" onclick="voltarParaServicos()">VOLTAR</button>
     </div>
 
-    <!-- ==============================================
-         JAVASCRIPT DIRETO NO HTML — NÃO PRECISA DE ARQUIVO SEPARADO!
-         ============================================== -->
     <script>
         const SEU_NUMERO_WHATSAPP = "5531990721928";
         const CHAVE_PIX = "williamempreiteiro007@gmail.com";
-        const SENHA_LIBERACAO = "12345"; // ← ALTERE A SENHA AQUI!
+        const SENHA_LIBERACAO = "12345";
 
         let jaPagouELiberado = false;
 
-        // ========== TROCA DE TELA ==========
         function mostrarPagina(idPagina) {
             document.getElementById('pg-principal').classList.add('oculta');
             document.getElementById('pg-servicos').classList.add('oculta');
@@ -95,7 +93,6 @@
             window.scrollTo(0, 0);
         }
 
-        // ========== BOTÕES ==========
         function comecar() { mostrarPagina('pg-servicos'); }
         function voltarParaPrincipal() { mostrarPagina('pg-principal'); }
         function voltarParaServicos() { mostrarPagina('pg-servicos'); }
