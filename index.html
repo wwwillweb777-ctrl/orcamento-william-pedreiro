@@ -4,7 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>William Pedreiro - Orçamentos</title>
-    <link rel="stylesheet" href="css/estilo.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f0f4f8; padding: 10px; }
+        .pagina { max-width: 450px; margin: 0 auto; background: #002f6c; padding: 20px; border-radius: 20px; border-top: 4px solid #D4AF37; color: #fff; }
+        .oculta { display: none !important; }
+        .cabecalho { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .leao-cabeca { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #D4AF37; }
+        .info-contato p { font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 8px; }
+        h1 { font-size: 26px; color: #ffffff; text-align: center; margin: 15px 0; }
+        .info-inicial { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 20px; color: #ffffff; }
+        .info-inicial strong { color: #D4AF37; }
+        .aviso-senha { background: rgba(255, 255, 255, 0.1); border: 2px solid #D4AF37; border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center; color: #ffffff; }
+        .aviso-senha strong { display:block; font-size:20px; color:#D4AF37; margin-bottom:10px; }
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #ffffff; cursor: pointer; margin-bottom: 10px; }
+        .btn-comecar { background: #25d366; font-size: 22px; }
+        .btn-servico { background: #0047ab; text-align: left; border: 1px solid #D4AF37; font-size: 17px; }
+        .btn-voltar { background: #d32f2f; }
+        .btn-ja-paguei { background: #25d366; font-size: 22px; box-shadow: 0 0 10px rgba(255,255,255,0.5); border: 2px solid #ffffff; }
+        input { width: 100%; padding: 12px; border: 2px solid #D4AF37; border-radius: 8px; font-size: 16px; margin-bottom: 15px; background: rgba(255,255,255,0.9); }
+        label { font-weight: bold; color: #ffffff; }
+        .area-pix { text-align: center; margin: 15px 0; }
+        .container-logo-valor { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
+        .logo-pix { width: 120px; }
+        .valor-pix { font-size: 28px; font-weight: bold; color: #ffffff; }
+        .instrucao { color: #ffffff; font-size: 18px; margin-bottom: 15px; line-height: 1.5; }
+        .caixa-chave { background: #ffffff; border: 3px solid #002f6c; border-radius: 15px; padding: 20px; }
+        .chave-pix { background: #D4AF37; color: #000000; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 17px; word-break: break-all; border: 2px solid #000; }
+        .img-topo-lib { width: 100%; max-width: 200px; display: block; margin: 0 auto 20px auto; border-radius: 10px; border: 3px solid #D4AF37; }
+        .campo-whats { background: rgba(255, 255, 255, 0.1); border: 2px solid #D4AF37; border-radius: 15px; padding: 15px; margin: 20px 0; text-align: center; }
+        .btn-copiar-pix { background: #D4AF37; margin-top: 15px; font-size: 18px; }
+    </style>
 </head>
 <body>
 
@@ -44,6 +74,7 @@
         <button class="btn btn-servico" onclick="irPara('servicos/05-concreto.html')">5 - CONCRETO (R$200,00/M³)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/06-gesso.html')">6 - GESSO (R$20,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/07-tijolos.html')">7 - 🧱 CALC. QUANTIDADE DE TIJOLOS</button>
+        <button class="btn btn-servico" onclick="irPara('servicos/08-resumo-geral.html')">📊 8 - RESUMO GERAL / ORÇAMENTO FINAL</button>
         <button class="btn btn-voltar" onclick="voltarParaPrincipal()">VOLTAR</button>
     </div>
 
@@ -53,7 +84,7 @@
         <h1>Obrigado pela preferência</h1>
         <div class="aviso-senha">
             <strong>⚠️ Aviso Importante</strong>
-            <p>Após sair, os créditos expiram. Precisa pagar novamente para gerar nova senha.</p>
+            <p>Após sair, os orçamentos salvos permanecem até que você clique em LIMPAR TUDO no Resumo Geral.</p>
         </div>
         <div class="area-pix">
             <div class="container-logo-valor">
@@ -63,7 +94,7 @@
             <p class="instrucao">👉 Clique para copiar a chave!</p>
             <div class="caixa-chave">
                 <p class="chave-pix">williamempreiteiro007@gmail.com</p>
-                <button class="btn btn-copiar-pix" onclick="copiarPix()" style="color: #000000; font-weight: bold;">📋 COPIAR CHAVE PIX</button>
+                <button class="btn btn-copiar-pix" onclick="copiarPix()">📋 COPIAR CHAVE PIX</button>
             </div>
         </div>
         <div class="campo-whats">
@@ -79,28 +110,26 @@
     <script>
         const SEU_NUMERO_WHATSAPP = "5531990721928";
         const CHAVE_PIX = "williamempreiteiro007@gmail.com";
-        const SENHA_LIBERACAO = "12345";
+        const SENHA_LIBERACAO = "12345"; // Altere para a senha que você quiser!
 
         let jaPagouELiberado = false;
 
         function mostrarPagina(idPagina) {
-            document.getElementById('pg-principal').classList.add('oculta');
-            document.getElementById('pg-servicos').classList.add('oculta');
-            document.getElementById('pg-senha').classList.add('oculta');
+            document.querySelectorAll('.pagina').forEach(p => p.classList.add('oculta'));
             document.getElementById(idPagina).classList.remove('oculta');
             window.scrollTo(0, 0);
         }
 
-        // ✅ CORREÇÃO: Ao começar NOVO orçamento, LIMPA os dados antigos!
+        // ✅ AO CLICAR EM ENTRAR — LIMPA O ORÇAMENTO ANTIGO!
         function comecar() {
-            // 🧹 LIMPA orçamentos anteriores — começa do zero!
-            localStorage.removeItem('orcamentoCompleto');
+            localStorage.removeItem('orcamentoCompleto'); // 🧹 COMEÇA DO ZERO!
             mostrarPagina('pg-servicos');
         }
 
         function voltarParaPrincipal() { mostrarPagina('pg-principal'); }
         function voltarParaServicos() { mostrarPagina('pg-servicos'); }
 
+        // ✅ IR PARA OUTRA PÁGINA — VERIFICA SE JÁ FOI LIBERADO
         function irPara(url) {
             if (jaPagouELiberado) {
                 window.location.href = url;
@@ -118,10 +147,9 @@
         function avisarPagamento() {
             const num = document.getElementById('whats_cliente').value.replace(/\D/g, '');
             if (num.length < 10) { alert("⚠️ Digite um WhatsApp válido!"); return; }
-            const numero = num.length === 11 ? "55" + num : num;
             const msg = encodeURIComponent("Olá William! Paguei o PIX. Preciso da senha! 🙏");
-            window.open(`https://wa.me/${numero}?text=${msg}`, '_blank');
-            alert("✅ WhatsApp aberto! Aguarde a senha.");
+            window.open(`https://wa.me/${SEU_NUMERO_WHATSAPP}?text=${msg}`, '_blank');
+            alert("✅ Mensagem enviada! Aguarde a senha.");
         }
 
         function validarSenha() {
