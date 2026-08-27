@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumo Geral - William Pedreiro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f0f4f8; padding: 10px; }
+        .pagina { max-width: 450px; margin: 0 auto; background: #002f6c; padding: 20px; border-radius: 20px; border-top: 4px solid #D4AF37; color: #fff; }
+        h1 { font-size: 26px; color: #ffd700; text-align: center; margin-bottom: 5px; }
+        h2 { font-size: 16px; color: #fff; text-align: center; margin-bottom: 20px; font-weight: normal; }
+        
+        .aviso { background: rgba(212,175,55,0.2); border: 2px solid #D4AF37; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; color: #fff; font-size: 15px; }
+        
+        .lista-servicos { background: rgba(255,255,255,0.05); border-radius: 10px; padding: 15px; margin: 20px 0; }
+        .item-servico { border-bottom: 1px solid rgba(255,255,255,0.15); padding: 12px 0; }
+        .item-servico:last-child { border-bottom: none; }
+        .nome-servico { font-weight: bold; color: #ffd700; font-size: 17px; margin-bottom: 5px; }
+        .medida-servico { font-size: 14px; color: #ddd; }
+        .valor-servico { font-size: 16px; color: #0f0; font-weight: bold; margin-top: 3px; }
+        
+        .caixa-total { background: rgba(0,255,0,0.1); border: 3px solid #0f0; border-radius: 12px; padding: 20px; margin-top: 25px; text-align: center; }
+        .texto-total { font-size: 20px; color: #fff; }
+        .valor-total { font-size: 32px; color: #0f0; font-weight: bold; margin-top: 10px; }
+        
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; color: #fff; cursor: pointer; margin-top: 12px; }
+        .btn-whatsapp { background: #25d366; }
+        .btn-limpar { background: #ff4444; }
+        .btn-inicio { background: #0047ab; }
+        .btn-voltar { background: #d32f2f; }
+        
+        .vazio { text-align: center; padding: 40px 20px; color: #aaa; font-size: 16px; line-height: 1.8; }
+    </style>
+</head>
+<body>
+
+<div class="pagina">
+    <h1>📊 ORÇAMENTO COMPLETO</h1>
+    <h2>William Pedreiro & Empreiteiro</h2>
+
+    <div class="aviso">
+        ✅ Serviços salvos automaticamente
+    </div>
+
+    <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 15px; color: #ccc;">
+        <p>📅 Data: <span id="data-hoje">--/--/----</span></p>
+        <p>📋 Serviços: <span id="qtd-servicos">0</span></p>
+    </div>
+
+    <div class="lista-servicos" id="lista-servicos">
+        <p class="vazio">Nenhum serviço salvo ainda.<br>Volte e calcule pelo menos um serviço para ver o resumo.</p>
+    </div>
+
+    <div class="caixa-total">
+        <p class="texto-total">💵 VALOR TOTAL DO ORÇAMENTO</p>
+        <p class="valor-total" id="valor-total">R$ 0,00</p>
+    </div>
+
+    <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">📲 ENVIAR NO WHATSAPP</button>
+    <button class="btn btn-limpar" onclick="limparTudo()">🗑️ LIMPAR TUDO</button>
+    <button class="btn btn-inicio" onclick="voltarInicio()">🏠 PÁGINA INICIAL</button>
+    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
+</div>
+
+<script>
+const SEU_NUMERO = "5531990721928";
+
+// Data de hoje
+function formatarData() {
+    const d = new Date();
+    return `${d.getDate().toString().padStart(2,'0')}/${(d.getMonth()+1).toString().padStart(2,'0')}/${d.getFullYear()}`;
+}
+document.getElementById('data-hoje').textContent = formatarData();
+
+// Carrega e exibe os serviços salvos
+function carregarResumo() {
+    const lista = document.getElementById('lista-servicos');
+    const qtd = document.getElementById('qtd-servicos');
+    const valorTotalEl = document.getElementById('valor-total');
+    
+    // ✅ LÊ DO LOCALSTORAGE — onde o index.html salvou!
+    const dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    qtd.textContent = dadosAcumulados.length;
+
+    if(dadosAcumulados.length === 0) {
+        lista.innerHTML = `<p class="vazio">Nenhum serviço salvo ainda.<br>Volte e calcule pelo menos um serviço para ver o resumo.</p>`;
+        valorTotalEl.textContent = 'R$ 0,00';
+        return;
+    }
+
+    lista.innerHTML = '';
+    let valorTotalGeral = 0;
+
+    dadosAcumulados.forEach((servico, index) => {
+        // Converte o valor para número e soma
+        const valorNum = parseFloat(servico.valor.replace('R$ ', '').replace('.', '').replace(',', '.')) || 0;
+        valorTotalGeral += valorNum;
+
+        const item = document.createElement('div');
+        item.className = 'item-servico';
+        item.innerHTML = `
+            <p class="nome-servico">${index + 1}. ${servico.servico}</p>
+            <p class="medida-servico">📏 ${servico.medida}</p>
+            <p class="valor-servico">💰 ${servico.valor}</p>
+        `;
+        lista.appendChild(item);
+    });
+
+    valorTotalEl.textContent = `R$ ${valorTotalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+function enviarWhatsApp() {
+    const dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    
+    if(dadosAcumulados.length === 0) {
+        alert("⚠️ Nenhum serviço salvo! Calcule e salve pelo menos um serviço antes de enviar.");
+        return;
+    }
+
+    let valorTotalGeral = 0;
+    dadosAcumulados.forEach(s => {
+        const num = parseFloat(s.valor.replace('R$ ', '').replace('.', '').replace(',', '.')) || 0;
+        valorTotalGeral += num;
+    });
+
+    let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
+    mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    mensagem += `📅 Data: ${formatarData()}\n`;
+    mensagem += `📊 Total de ${dadosAcumulados.length} serviço(s)\n\n`;
+    mensagem += `📌 *SERVIÇOS:*\n`;
+
+    dadosAcumulados.forEach((servico, index) => {
+        mensagem += `\n${index + 1}. *${servico.servico}*\n`;
+        mensagem += `   📏 Medida: ${servico.medida}\n`;
+        mensagem += `   💰 Valor: ${servico.valor}\n`;
+    });
+
+    mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+    mensagem += `💵 *VALOR TOTAL: R$ ${valorTotalGeral.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}*\n`;
+    mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    mensagem += `👋 Obrigado pela preferência!`;
+
+    window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
+    alert("✅ Abrindo WhatsApp com o orçamento completo!");
+}
+
+function limparTudo() {
+    if(confirm("⚠️ Tem certeza? Isso apagará TODOS os serviços salvos!")) {
+        localStorage.removeItem('orcamentoCompleto');
+        carregarResumo();
+        alert("✅ Limpo! Pronto para um novo orçamento.");
+    }
+}
+
+function voltarInicio() {
+    window.location.href = "../index.html";
+}
+
+function voltar() {
+    window.history.back();
+}
+
+// Carrega automaticamente ao abrir
+window.onload = carregarResumo;
+</script>
+
+</body>
+</html>
