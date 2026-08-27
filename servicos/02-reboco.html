@@ -10,7 +10,6 @@
         .pagina { max-width: 450px; margin: 0 auto; background: #002f6c; padding: 20px; border-radius: 20px; border-top: 4px solid #D4AF37; color: #fff; }
         h1 { font-size: 26px; color: #fff; text-align: center; margin-bottom: 20px; }
         
-        /* REGRAS DE CONVERSÃO */
         .regra-importante { background: rgba(255,200,0,0.2); border: 2px solid #ffcc00; padding: 12px; border-radius: 8px; margin: 15px 0; font-size: 14px; text-align: center; font-weight: bold; color: #fff; }
         .aviso-erro { background: rgba(255,0,0,0.2); border: 1px solid red; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px; text-align: center; color: #fff; }
         .correto { color: #0f0; font-weight: bold; }
@@ -19,41 +18,33 @@
         .linha { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 13px; color: #fff; }
         .medida { font-weight: bold; color: #D4AF37; }
         
-        /* AVISO DE PREÇO POR ESPESSURA */
         .aviso-preco { background: rgba(212,175,55,0.2); border: 2px solid #D4AF37; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; color: #fff; font-size: 14px; line-height: 1.8; }
         .aviso-preco strong { color: #ffd700; }
         
-        /* TRAÇO DO REBOCO */
         .traco { background: rgba(0,150,255,0.15); border: 2px solid #00a2ff; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; color: #fff; font-size: 16px; line-height: 1.8; }
         .traco strong { color: #00a2ff; font-size: 18px; }
         
-        /* CAMPOS */
         label { font-weight: bold; color: #fff; display: block; margin-bottom: 5px; margin-top: 15px; }
         input { width: 100%; padding: 12px; border: 2px solid #D4AF37; border-radius: 8px; font-size: 16px; margin-bottom: 10px; background: rgba(255,255,255,0.9); }
         
-        /* BOTÕES — COM CORES */
         .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #fff; cursor: pointer; margin-top: 10px; }
-        .btn-calcular { background: #ff8800; color: #fff; }    /* 🟠 LARANJA */
-        .btn-salvar { background: #17a2b8; color: #fff; }       /* 🔵 AZUL */
-        .btn-whatsapp { background: #25d366; color: #fff; }     /* 🟩 WHATSAPP */
-        .btn-proximo { background: #28a745; color: #fff; }      /* 🟢 VERDE */
-        .btn-voltar { background: #d32f2f; color: #fff; }       /* 🔴 VERMELHO */
+        .btn-calcular { background: #ff8800; }
+        .btn-salvar { background: #17a2b8; }
+        .btn-whatsapp { background: #25d366; }
+        .btn-proximo { background: #28a745; }
+        .btn-voltar { background: #d32f2f; }
         
-        /* RESULTADO — PADRÃO BRASILEIRO */
         .resultado { background: rgba(0,0,0,0.3); border: 2px solid #ffcc00; border-radius: 10px; padding: 20px; margin-top: 25px; text-align: center; font-size: 20px; line-height: 2; color: #fff; display: none; }
         .valor-final { color: #0f0; font-weight: bold; font-size: 28px; }
         .preco-unitario { color: #ffd700; font-size: 16px; }
         
-        /* MATERIAIS */
         .tabela-materiais { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; margin: 20px 0; display: none; }
         .titulo-materiais { color: #ffd700; font-size: 22px; font-weight: bold; text-align: center; margin-bottom: 15px; }
         .item-material { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.15); font-size: 16px; }
         .nome-material { color: #ffd700; }
         
-        /* DICAS */
         .dica { background: rgba(0,255,0,0.1); border: 1px solid #0f0; padding: 15px; border-radius: 8px; margin: 20px 0; font-size: 15px; color: #fff; line-height: 1.8; }
         
-        /* CAMPO WHATSAPP */
         .campo-whats { background: rgba(255,255,255,0.1); border: 2px solid #25d366; border-radius: 10px; padding: 15px; margin-top: 20px; display: none; }
         .campo-whats label { margin-top: 0; color: #25d366; }
     </style>
@@ -63,7 +54,6 @@
 <div class="pagina">
     <h1>🏗️ REBOCO — R$ 25,00/m²</h1>
 
-    <!-- ⚠️ REGRA DO PREÇO POR ESPESSURA -->
     <div class="aviso-preco">
         <strong>ℹ️ COMO FUNCIONA O PREÇO:</strong><br>
         ✅ Espessura padrão: <strong>2 cm</strong> → R$ 25,00/m²<br>
@@ -72,7 +62,6 @@
         ➡️ Se ficar no meio termo → Mantém o preço atual
     </div>
 
-    <!-- 🧪 TRAÇO DO REBOCO -->
     <div class="traco">
         <strong>🧪 TRAÇO DO REBOCO:</strong><br>
         1 Saco de Cimento : 3 Carrinhos de Areia<br>
@@ -107,10 +96,8 @@
     <label>📏 Espessura (cm → converta para metros):</label>
     <input type="text" id="espessura" placeholder="Ex: 0,02 (2cm) ou 0,025">
 
-    <!-- 🟠 BOTÃO CALCULAR -->
     <button class="btn btn-calcular" onclick="calcular()">CALCULAR VALOR</button>
 
-    <!-- RESULTADO — PADRÃO BRASILEIRO -->
     <div class="resultado" id="resultado">
         <p><strong>Serviço:</strong> REBOCO</p>
         <p><strong>Área Total:</strong> <span id="area" class="valor-final">0,00</span> m²</p>
@@ -118,7 +105,6 @@
         <p><strong>Valor Total:</strong> <span id="valor" class="valor-final">R$ 0,00</span></p>
     </div>
 
-    <!-- 📦 MATERIAIS -->
     <div class="tabela-materiais" id="areaMateriais">
         <p class="titulo-materiais">📦 MATERIAIS NECESSÁRIOS</p>
         <div class="item-material">
@@ -144,43 +130,33 @@
         • Compre sempre um pouco mais para não faltar
     </div>
 
-    <!-- 🔵 BOTÃO SALVAR — ACUMULA COM OS DADOS ANTERIORES -->
     <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
-
-    <!-- 🟩 BOTÃO ENVIAR WHATSAPP — ENVIA TUDO JUNTO -->
     <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
 
-    <!-- CAMPO WHATSAPP -->
     <div class="campo-whats" id="area-whats">
         <label>📱 Seu WhatsApp:</label>
         <input type="tel" id="whats-cliente" placeholder="Ex: 31999998888">
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ CONFIRMAR E ENVIAR</button>
     </div>
 
-    <!-- 🟢 BOTÃO PRÓXIMO — SALVA E VAI PARA O PRÓXIMO SERVIÇO -->
-    <button class="btn btn-proximo" onclick="salvarEAvancar()">➡️ PRÓXIMO</button>
-
-    <!-- 🔴 BOTÃO VOLTAR -->
+    <button class="btn btn-proximo" onclick="irParaProximo()">➡️ PRÓXIMO</button>
     <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
 </div>
 
 <script>
-const PRECO_M2 = 25; // R$ 25,00 por m²
-const ESPESSURA_PADRAO = 0.02; // 2 cm = preço base
-const SEU_NUMERO = "5531990721928"; // Seu WhatsApp
-const TOTAL_ETAPAS = 7; // Total de serviços do sistema
+const PRECO_M2 = 25;
+const SEU_NUMERO = "5531990721928";
+const TOTAL_ETAPAS = 7;
 
-// ✅ CARREGA OS DADOS JÁ SALVOS ANTERIORMENTE (Alvenaria, etc.)
+// ✅ LÊ O QUE JÁ FOI SALVO ANTES — NÃO COMEÇA DO ZERO!
 let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
-let dadosSalvos = null; // Dados do serviço atual
+let dadosSalvos = null;
 
-// PEGA VALOR E CONVERTE VÍRGULA PARA PONTO
 function obterValor(id) {
     const valor = document.getElementById(id).value.replace(',', '.');
     return parseFloat(valor) || 0;
 }
 
-// ✅ FORMATAÇÃO BRASILEIRA: 1.144,00
 function formatarNumero(valor, decimais = 2) {
     return valor.toLocaleString('pt-BR', { 
         minimumFractionDigits: decimais, 
@@ -188,7 +164,6 @@ function formatarNumero(valor, decimais = 2) {
     });
 }
 
-// FORMATA MATERIAIS
 function formatarCimento(litros) {
     const sacos = Math.floor(litros / 50);
     const resto = litros % 50;
@@ -218,36 +193,27 @@ function calcular() {
     const area = larg * alt;
     const espessCm = espess * 100;
     
-    // REGRA DE PREÇO POR ESPESSURA
     let multiplicador = 1;
     if (espessCm >= 5) multiplicador = 3;
     else if (espessCm >= 3) multiplicador = 2;
     
-    const valorBase = area * PRECO_M2;
-    const valorFinal = valorBase * multiplicador;
+    const valorFinal = area * PRECO_M2 * multiplicador;
 
-    // CÁLCULO DE MATERIAIS (traço 1:3)
     const volumeReboco = area * espess;
     const densidadeMassa = 1800;
     const massaTotal = volumeReboco * densidadeMassa;
-    const pesoCimento = massaTotal / 4;
-    const pesoAreia = massaTotal * 3 / 4;
-    const litrosCimento = pesoCimento / 1.44;
-    const litrosAreia = pesoAreia / 1.6;
+    const litrosCimento = (massaTotal / 4) / 1.44;
+    const litrosAreia = (massaTotal * 3 / 4) / 1.6;
 
-    // EXIBE NO PADRÃO BRASILEIRO
     document.getElementById('area').textContent = formatarNumero(area) + ' m²';
     document.getElementById('espessura-resultado').textContent = formatarNumero(espessCm, 1) + ' cm × ' + multiplicador + 'x';
     document.getElementById('valor').textContent = 'R$ ' + formatarNumero(valorFinal);
-    
-    // MATERIAIS
     document.getElementById('qtd-cimento').textContent = formatarCimento(litrosCimento);
     document.getElementById('qtd-areia').textContent = formatarAreia(litrosAreia);
     
     document.getElementById('resultado').style.display = 'block';
     document.getElementById('areaMateriais').style.display = 'block';
 
-    // ✅ SALVA OS DADOS DO SERVIÇO ATUAL NO FORMATO PADRÃO DO SISTEMA
     dadosSalvos = {
         servico: "REBOCO",
         medida: formatarNumero(area) + ' m²',
@@ -260,27 +226,21 @@ function calcular() {
     };
 }
 
-// ✅ FUNÇÃO SALVAR — IGUAL AO ARQUIVO PRINCIPAL! ADICIONA SEM APAGAR OS ANTERIORES
+// ✅ SALVAR — ADICIONA SEM APAGAR OS ANTERIORES!
 function salvarItem() {
     if(!dadosSalvos) {
         alert("⚠️ Calcule primeiro antes de salvar!");
         return;
     }
-    // Adiciona o serviço atual NA LISTA QUE JÁ EXISTE (Alvenaria + ...)
+    dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     dadosAcumulados.push({ ...dadosSalvos });
-    // Salva TUDO no localStorage para compartilhar entre TODAS as páginas
     localStorage.setItem('orcamentoCompleto', JSON.stringify(dadosAcumulados));
-    alert(`✅ SALVO! (${dadosAcumulados.length} de ${TOTAL_ETAPAS})`);
-}
-
-// ✅ SALVA E AVANÇA — IGUAL AO PRINCIPAL
-function salvarEAvancar() {
-    salvarItem();
-    window.location.href = "03-porcelanato.html";
+    alert(`✅ SALVO! Total de serviços: ${dadosAcumulados.length}`);
 }
 
 function mostrarCampoWhatsApp() {
-    if(!dadosSalvos && dadosAcumulados.length === 0) {
+    const todos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    if(todos.length === 0 && !dadosSalvos) {
         alert("⚠️ Calcule e salve pelo menos um serviço antes de enviar!");
         return;
     }
@@ -288,29 +248,25 @@ function mostrarCampoWhatsApp() {
     document.getElementById('area-whats').scrollIntoView({ behavior: 'smooth' });
 }
 
-// ✅ ENVIA TUDO JUNTO — LÊ TODOS OS SERVIÇOS SALVOS!
+// ✅ ENVIA TUDO QUE FOI SALVO — DE TODAS AS PÁGINAS!
 function enviarWhatsApp() {
     const numero = document.getElementById('whats-cliente').value.replace(/\D/g, '');
-    
     if(numero.length < 10) {
         alert("⚠️ Digite seu WhatsApp com DDD! Ex: 31999998888");
         return;
     }
 
-    // ✅ CARREGA TODOS OS DADOS SALVOS (Alvenaria + Reboco + ...)
     const todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     
     if(todosOsServicos.length === 0 && !dadosSalvos) {
-        alert("⚠️ Calcule e salve pelo menos um serviço antes de enviar!");
+        alert("⚠️ Salve pelo menos um serviço!");
         return;
     }
 
-    // Se o atual não estiver salvo ainda, inclui ele
-    if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico && s.valor === dadosSalvos.valor)) {
+    if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico)) {
         todosOsServicos.push(dadosSalvos);
     }
 
-    // ✅ MONTA A MENSAGEM COMPLETA COM TODOS OS SERVIÇOS
     let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
     mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
     mensagem += `👤 *Cliente:* ${numero}\n\n`;
@@ -320,20 +276,17 @@ function enviarWhatsApp() {
         mensagem += `\n${index + 1}. *${servico.servico}*\n`;
         mensagem += `   📏 Medida: ${servico.medida}\n`;
         mensagem += `   💰 Valor: ${servico.valor}\n`;
-        if(servico.materiais) {
-            mensagem += `   🧱 Materiais:\n`;
-            if(servico.materiais.cimento) mensagem += `      • Cimento: ${servico.materiais.cimento}\n`;
-            if(servico.materiais.areia) mensagem += `      • Areia: ${servico.materiais.areia}\n`;
-            if(servico.materiais.brita) mensagem += `      • Brita: ${servico.materiais.brita}\n`;
-            if(servico.materiais.agua) mensagem += `      • Água: ${servico.materiais.agua}\n`;
-        }
     });
 
     mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
-    // ✅ ABRE WHATSAPP COM O ORÇAMENTO COMPLETO
     window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
-    alert("✅ Orçamento completo enviado! Abrindo WhatsApp...");
+    alert("✅ Orçamento completo! Abrindo WhatsApp...");
+}
+
+// ✅ PRÓXIMO = SÓ AVANÇA — NÃO FORÇA SALVAR!
+function irParaProximo() {
+    window.location.href = "03-porcelanato.html";
 }
 
 function voltar() {
