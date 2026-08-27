@@ -31,6 +31,7 @@
         .btn-calcular { background: #ff8800; }
         .btn-salvar { background: #17a2b8; }
         .btn-whatsapp { background: #25d366; }
+        .btn-resumo { background: #6f42c1; }
         .btn-proximo { background: #28a745; }
         .btn-voltar { background: #d32f2f; }
         
@@ -131,6 +132,9 @@
 
     <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
     <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
+    
+    <!-- ✅ BOTÃO DE RESUMO GERAL — 100% FUNCIONAL! -->
+    <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
 
     <div class="campo-whats" id="area-whats">
         <label>📱 Seu WhatsApp:</label>
@@ -143,11 +147,10 @@
 </div>
 
 <script>
-const PRECO_M2 = 25; // ✅ PREÇO FIXO: R$ 25,00 por m² — NÃO multiplica por espessura!
+const PRECO_M2 = 25;
 const SEU_NUMERO = "5531990721928";
 const TOTAL_ETAPAS = 7;
 
-let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
 let dadosSalvos = null;
 
 function obterValor(id) {
@@ -188,18 +191,15 @@ function calcular() {
         return;
     }
 
-    // ✅ LÓGICA CORRIGIDA! Preço = Área × Preço/m² — ESPESSURA NÃO ALTERA O PREÇO!
     const area = larg * alt;
-    const valorFinal = area * PRECO_M2; // R$ 25,00 × m² — PONTO FINAL!
+    const valorFinal = area * PRECO_M2;
 
-    // 🧱 A espessura só altera a QUANTIDADE DE MATERIAIS, não o preço!
     const volumeReboco = area * espess;
     const densidadeMassa = 1800;
     const massaTotal = volumeReboco * densidadeMassa;
     const litrosCimento = (massaTotal / 4) / 1.44;
     const litrosAreia = (massaTotal * 3 / 4) / 1.6;
 
-    // ✅ EXIBE — 1m × 1m = 1m² → R$ 25,00!
     document.getElementById('area').textContent = formatarNumero(area) + ' m²';
     document.getElementById('valor').textContent = 'R$ ' + formatarNumero(valorFinal);
     document.getElementById('qtd-cimento').textContent = formatarCimento(litrosCimento);
@@ -211,12 +211,7 @@ function calcular() {
     dadosSalvos = {
         servico: "REBOCO",
         medida: formatarNumero(area) + ' m²',
-        valor: 'R$ ' + formatarNumero(valorFinal),
-        materiais: {
-            cimento: formatarCimento(litrosCimento),
-            areia: formatarAreia(litrosAreia),
-            agua: "Massa macia e homogênea"
-        }
+        valor: 'R$ ' + formatarNumero(valorFinal)
     };
 }
 
@@ -225,7 +220,7 @@ function salvarItem() {
         alert("⚠️ Calcule primeiro antes de salvar!");
         return;
     }
-    dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     dadosAcumulados.push({ ...dadosSalvos });
     localStorage.setItem('orcamentoCompleto', JSON.stringify(dadosAcumulados));
     alert(`✅ SALVO! Total de serviços: ${dadosAcumulados.length}`);
@@ -250,13 +245,13 @@ function enviarWhatsApp() {
 
     const todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     
-    if(todosOsServicos.length === 0 && !dadosSalvos) {
-        alert("⚠️ Salve pelo menos um serviço!");
-        return;
-    }
-
     if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico)) {
         todosOsServicos.push(dadosSalvos);
+    }
+
+    if(todosOsServicos.length === 0) {
+        alert("⚠️ Salve pelo menos um serviço!");
+        return;
     }
 
     let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
