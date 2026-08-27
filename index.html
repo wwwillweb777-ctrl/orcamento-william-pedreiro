@@ -72,8 +72,8 @@
         <button class="btn btn-servico" onclick="irPara('servicos/03-porcelanato.html')">3 - PORCELANATO (R$60,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/04-ceramica.html')">4 - CERÂMICA (R$40,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/05-concreto.html')">5 - CONCRETO (R$200,00/M³)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/06-gesso.html')">6 - GESSO (R$20,00/M²)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/07-tijolos.html')">7 - 🧱 CALC. QUANTIDADE DE TIJOLOS</button>
+        <button class="btn btn-servico" onclick="irPara('servicos/07-tijolos.html')">6 - 🧱 CALC. QUANTIDADE DE TIJOLOS</button>
+        <button class="btn btn-servico" onclick="irPara('servicos/06-gesso.html')">7 - GESSO (R$20,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/08-resumo-geral.html')">📊 8 - RESUMO GERAL / ORÇAMENTO FINAL</button>
         <button class="btn btn-voltar" onclick="voltarParaPrincipal()">VOLTAR</button>
     </div>
@@ -110,7 +110,7 @@
     <script>
         const SEU_NUMERO_WHATSAPP = "5531990721928";
         const CHAVE_PIX = "williamempreiteiro007@gmail.com";
-        const SENHA_LIBERACAO = "12345"; // Altere para a senha que você quiser!
+        const SENHA_LIBERACAO = "12345";
 
         let jaPagouELiberado = false;
 
@@ -120,16 +120,14 @@
             window.scrollTo(0, 0);
         }
 
-        // ✅ AO CLICAR EM ENTRAR — LIMPA O ORÇAMENTO ANTIGO!
         function comecar() {
-            localStorage.removeItem('orcamentoCompleto'); // 🧹 COMEÇA DO ZERO!
+            localStorage.removeItem('orcamentoCompleto');
             mostrarPagina('pg-servicos');
         }
 
         function voltarParaPrincipal() { mostrarPagina('pg-principal'); }
         function voltarParaServicos() { mostrarPagina('pg-servicos'); }
 
-        // ✅ IR PARA OUTRA PÁGINA — VERIFICA SE JÁ FOI LIBERADO
         function irPara(url) {
             if (jaPagouELiberado) {
                 window.location.href = url;
