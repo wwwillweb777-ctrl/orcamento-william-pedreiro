@@ -40,7 +40,7 @@
     <h2>William Pedreiro & Empreiteiro</h2>
 
     <div class="aviso">
-        ✅ Serviços salvos automaticamente
+        ✅ Apenas os serviços que você salvou aparecem aqui
     </div>
 
     <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 15px; color: #ccc;">
@@ -49,7 +49,7 @@
     </div>
 
     <div class="lista-servicos" id="lista-servicos">
-        <p class="vazio">Nenhum serviço salvo ainda.<br>Volte e calcule pelo menos um serviço para ver o resumo.</p>
+        <p class="vazio">Nenhum serviço salvo ainda.<br>Volte, calcule e clique em SALVAR nos serviços desejados.</p>
     </div>
 
     <div class="caixa-total">
@@ -73,18 +73,18 @@ function formatarData() {
 }
 document.getElementById('data-hoje').textContent = formatarData();
 
-// Carrega e exibe os serviços salvos
+// ✅ LÊ SOMENTE O QUE FOI SALVO — NÃO MOSTRA TUDO!
 function carregarResumo() {
     const lista = document.getElementById('lista-servicos');
     const qtd = document.getElementById('qtd-servicos');
     const valorTotalEl = document.getElementById('valor-total');
     
-    // ✅ LÊ DO LOCALSTORAGE — onde o index.html salvou!
-    const dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
-    qtd.textContent = dadosAcumulados.length;
+    // ✅ LÊ EXATAMENTE O QUE O CLIENTE SALVOU — NÃO TODOS OS SERVIÇOS!
+    const dadosSalvos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    qtd.textContent = dadosSalvos.length;
 
-    if(dadosAcumulados.length === 0) {
-        lista.innerHTML = `<p class="vazio">Nenhum serviço salvo ainda.<br>Volte e calcule pelo menos um serviço para ver o resumo.</p>`;
+    if(dadosSalvos.length === 0) {
+        lista.innerHTML = `<p class="vazio">Nenhum serviço salvo ainda.<br>Volte, calcule e clique em SALVAR nos serviços desejados.</p>`;
         valorTotalEl.textContent = 'R$ 0,00';
         return;
     }
@@ -92,7 +92,8 @@ function carregarResumo() {
     lista.innerHTML = '';
     let valorTotalGeral = 0;
 
-    dadosAcumulados.forEach((servico, index) => {
+    // ✅ MOSTRA SÓ O QUE FOI SALVO — UM POR UM
+    dadosSalvos.forEach((servico, index) => {
         // Converte o valor para número e soma
         const valorNum = parseFloat(servico.valor.replace('R$ ', '').replace('.', '').replace(',', '.')) || 0;
         valorTotalGeral += valorNum;
@@ -111,15 +112,15 @@ function carregarResumo() {
 }
 
 function enviarWhatsApp() {
-    const dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    const dadosSalvos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     
-    if(dadosAcumulados.length === 0) {
+    if(dadosSalvos.length === 0) {
         alert("⚠️ Nenhum serviço salvo! Calcule e salve pelo menos um serviço antes de enviar.");
         return;
     }
 
     let valorTotalGeral = 0;
-    dadosAcumulados.forEach(s => {
+    dadosSalvos.forEach(s => {
         const num = parseFloat(s.valor.replace('R$ ', '').replace('.', '').replace(',', '.')) || 0;
         valorTotalGeral += num;
     });
@@ -127,10 +128,10 @@ function enviarWhatsApp() {
     let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
     mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
     mensagem += `📅 Data: ${formatarData()}\n`;
-    mensagem += `📊 Total de ${dadosAcumulados.length} serviço(s)\n\n`;
-    mensagem += `📌 *SERVIÇOS:*\n`;
+    mensagem += `📊 Total de ${dadosSalvos.length} serviço(s) selecionado(s)\n\n`;
+    mensagem += `📌 *SERVIÇOS SELECIONADOS:*\n`;
 
-    dadosAcumulados.forEach((servico, index) => {
+    dadosSalvos.forEach((servico, index) => {
         mensagem += `\n${index + 1}. *${servico.servico}*\n`;
         mensagem += `   📏 Medida: ${servico.medida}\n`;
         mensagem += `   💰 Valor: ${servico.valor}\n`;
@@ -146,7 +147,7 @@ function enviarWhatsApp() {
 }
 
 function limparTudo() {
-    if(confirm("⚠️ Tem certeza? Isso apagará TODOS os serviços salvos!")) {
+    if(confirm("⚠️ Tem certeza? Isso apagará SOMENTE os serviços salvos e começa um novo orçamento.")) {
         localStorage.removeItem('orcamentoCompleto');
         carregarResumo();
         alert("✅ Limpo! Pronto para um novo orçamento.");
@@ -161,7 +162,7 @@ function voltar() {
     window.history.back();
 }
 
-// Carrega automaticamente ao abrir
+// ✅ Carrega automaticamente ao abrir — mostra SÓ o que foi salvo
 window.onload = carregarResumo;
 </script>
 
