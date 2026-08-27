@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Concreto - William Pedreiro</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f0f4f8; padding: 10px; }
+        .pagina { max-width: 450px; margin: 0 auto; background: #002f6c; padding: 20px; border-radius: 20px; border-top: 4px solid #D4AF37; color: #fff; }
+        h1 { font-size: 26px; color: #fff; text-align: center; margin-bottom: 20px; }
+        
+        .aviso-preco { background: rgba(212,175,55,0.2); border: 2px solid #D4AF37; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center; color: #fff; font-size: 15px; line-height: 1.8; }
+        .aviso-preco strong { color: #ffd700; }
+        
+        .regra-importante { background: rgba(255,200,0,0.2); border: 2px solid #ffcc00; padding: 12px; border-radius: 8px; margin: 15px 0; font-size: 14px; text-align: center; font-weight: bold; color: #fff; }
+        .aviso-conversao { background: rgba(255,0,0,0.15); border: 1px solid #ff4444; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px; color: #fff; text-align: center; }
+        
+        label { font-weight: bold; color: #fff; display: block; margin-bottom: 5px; margin-top: 15px; }
+        input { width: 100%; padding: 12px; border: 2px solid #D4AF37; border-radius: 8px; font-size: 16px; margin-bottom: 10px; background: rgba(255,255,255,0.9); }
+        
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #fff; cursor: pointer; margin-top: 10px; }
+        .btn-calcular { background: #ff8800; }
+        .btn-salvar { background: #17a2b8; }
+        .btn-whatsapp { background: #25d366; }
+        .btn-proximo { background: #28a745; }
+        .btn-voltar { background: #d32f2f; }
+        
+        .resultado { background: rgba(0,0,0,0.3); border: 2px solid #ffcc00; border-radius: 10px; padding: 20px; margin-top: 25px; text-align: center; font-size: 20px; line-height: 2; color: #fff; display: none; }
+        .valor-final { color: #0f0; font-weight: bold; font-size: 28px; }
+        .preco-unitario { color: #ffd700; font-size: 16px; }
+        
+        .tabela-materiais { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; margin: 20px 0; display: none; }
+        .titulo-materiais { color: #ffd700; font-size: 22px; font-weight: bold; text-align: center; margin-bottom: 15px; }
+        .item-material { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.15); font-size: 16px; }
+        .nome-material { color: #ffd700; }
+        
+        .dica { background: rgba(0,255,0,0.1); border: 1px solid #0f0; padding: 15px; border-radius: 8px; margin: 20px 0; font-size: 15px; color: #fff; line-height: 1.8; }
+        
+        .campo-whats { background: rgba(255,255,255,0.1); border: 2px solid #25d366; border-radius: 10px; padding: 15px; margin-top: 20px; display: none; }
+        .campo-whats label { margin-top: 0; color: #25d366; }
+    </style>
+</head>
+<body>
+
+<div class="pagina">
+    <h1>🧱 CONCRETO — R$ 200,00/m³</h1>
+
+    <div class="aviso-preco">
+        <strong>ℹ️ COMO FUNCIONA:</strong><br>
+        ✅ Preço fixo: <strong>R$ 200,00 por m³</strong><br>
+        📏 Comprimento × Largura × Espessura = Volume em m³<br>
+        💡 Traço: 1 cimento : 2,5 areia : 3 brita
+    </div>
+
+    <div class="regra-importante">
+        ⚠️ <strong>REGRA DO METRO CÚBICO!</strong><br>
+        3 MEDIDAS → COMPRIMENTO × LARGURA × ESPESSURA<br>
+        1m × 1m × 1m = 1 m³ → R$ 200,00
+    </div>
+
+    <div class="aviso-conversao">
+        🔴 <strong>ATENÇÃO:</strong> Se a espessura for em cm, converta para metros!<br>
+        Ex: 15 cm → escreva <strong>0,15</strong> | 5 cm → <strong>0,05</strong>
+    </div>
+
+    <label>📏 Comprimento (metros):</label>
+    <input type="text" id="comprimento" placeholder="Ex: 3,00">
+
+    <label>📏 Largura (metros):</label>
+    <input type="text" id="largura" placeholder="Ex: 2,00">
+
+    <label>📏 Espessura / Altura (metros):</label>
+    <input type="text" id="espessura" placeholder="Ex: 0,15 (15cm) ou 0,20">
+
+    <button class="btn btn-calcular" onclick="calcular()">CALCULAR VALOR</button>
+
+    <div class="resultado" id="resultado">
+        <p><strong>Serviço:</strong> CONCRETO</p>
+        <p><strong>Volume Total:</strong> <span id="volume" class="valor-final">0,00</span> m³</p>
+        <p class="preco-unitario">Preço fixo: R$ 200,00 por m³</p>
+        <p><strong>Valor Total:</strong> <span id="valor" class="valor-final">R$ 0,00</span></p>
+    </div>
+
+    <div class="tabela-materiais" id="areaMateriais">
+        <p class="titulo-materiais">📦 MATERIAIS NECESSÁRIOS</p>
+        <div class="item-material">
+            <span class="nome-material">🏗️ Cimento</span>
+            <span id="qtd-cimento">---</span>
+        </div>
+        <div class="item-material">
+            <span class="nome-material">🏖️ Areia Média</span>
+            <span id="qtd-areia">---</span>
+        </div>
+        <div class="item-material">
+            <span class="nome-material">🪨 Brita nº 1</span>
+            <span id="qtd-brita">---</span>
+        </div>
+        <div class="item-material">
+            <span class="nome-material">💧 Água</span>
+            <span>Conforme a consistência da massa</span>
+        </div>
+    </div>
+
+    <div class="dica">
+        💡 <strong>DICAS IMPORTANTES:</strong><br>
+        • Traço recomendado: 1 de cimento : 2,5 de areia : 3 de brita<br>
+        • Compacte bem o concreto para evitar bolhas<br>
+        • Faça a cura molhando por 7 dias seguidos<br>
+        • Não aplique com chuva ou sol muito forte<br>
+        • Use desmoldante nas fôrmas para facilitar a retirada
+    </div>
+
+    <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
+    <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
+
+    <div class="campo-whats" id="area-whats">
+        <label>📱 Seu WhatsApp:</label>
+        <input type="tel" id="whats-cliente" placeholder="Ex: 31999998888">
+        <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ CONFIRMAR E ENVIAR</button>
+    </div>
+
+    <button class="btn btn-proximo" onclick="irParaProximo()">➡️ PRÓXIMO</button>
+    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
+</div>
+
+<script>
+const PRECO_M3 = 200; // ✅ PREÇO FIXO: R$ 200,00 por m³
+const SEU_NUMERO = "5531990721928";
+const TOTAL_ETAPAS = 7;
+
+let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+let dadosSalvos = null;
+
+function obterValor(id) {
+    const valor = document.getElementById(id).value.replace(',', '.');
+    return parseFloat(valor) || 0;
+}
+
+function formatarNumero(valor, decimais = 2) {
+    return valor.toLocaleString('pt-BR', { 
+        minimumFractionDigits: decimais, 
+        maximumFractionDigits: decimais 
+    });
+}
+
+function calcular() {
+    const comp = obterValor('comprimento');
+    const larg = obterValor('largura');
+    const esp = obterValor('espessura');
+
+    if(!comp || !larg || !esp || comp <= 0 || larg <= 0 || esp <= 0) {
+        alert("⚠️ Digite todas as medidas válidas e maiores que zero!");
+        return;
+    }
+
+    // ✅ COMPRIMENTO × LARGURA × ESPESSURA = VOLUME × PREÇO/m³
+    const volume = comp * larg * esp;
+    const valorFinal = volume * PRECO_M3; // R$ 200,00 × m³
+
+    // 📦 Cálculo aproximado de materiais (traço 1:2.5:3)
+    const sacosCimento = Math.ceil(volume * 6.5); // ~6,5 sacos por m³
+    const m3Areia = (volume * 0.45).toFixed(2);
+    const m3Brita = (volume * 0.55).toFixed(2);
+
+    // ✅ EXIBE — 1m × 1m × 1m = 1m³ → R$ 200,00!
+    document.getElementById('volume').textContent = formatarNumero(volume) + ' m³';
+    document.getElementById('valor').textContent = 'R$ ' + formatarNumero(valorFinal);
+    document.getElementById('qtd-cimento').textContent = sacosCimento + ' sacos de 50kg';
+    document.getElementById('qtd-areia').textContent = m3Areia + ' m³';
+    document.getElementById('qtd-brita').textContent = m3Brita + ' m³';
+    
+    document.getElementById('resultado').style.display = 'block';
+    document.getElementById('areaMateriais').style.display = 'block';
+
+    dadosSalvos = {
+        servico: "CONCRETO",
+        medida: formatarNumero(volume) + ' m³',
+        valor: 'R$ ' + formatarNumero(valorFinal),
+        materiais: {
+            cimento: sacosCimento + ' sacos',
+            areia: m3Areia + ' m³',
+            brita: m3Brita + ' m³'
+        }
+    };
+}
+
+function salvarItem() {
+    if(!dadosSalvos) {
+        alert("⚠️ Calcule primeiro antes de salvar!");
+        return;
+    }
+    dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    dadosAcumulados.push({ ...dadosSalvos });
+    localStorage.setItem('orcamentoCompleto', JSON.stringify(dadosAcumulados));
+    alert(`✅ SALVO! Total de serviços: ${dadosAcumulados.length}`);
+}
+
+function mostrarCampoWhatsApp() {
+    const todos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    if(todos.length === 0 && !dadosSalvos) {
+        alert("⚠️ Calcule e salve pelo menos um serviço antes de enviar!");
+        return;
+    }
+    document.getElementById('area-whats').style.display = 'block';
+    document.getElementById('area-whats').scrollIntoView({ behavior: 'smooth' });
+}
+
+function enviarWhatsApp() {
+    const numero = document.getElementById('whats-cliente').value.replace(/\D/g, '');
+    if(numero.length < 10) {
+        alert("⚠️ Digite seu WhatsApp com DDD! Ex: 31999998888");
+        return;
+    }
+
+    const todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    
+    if(todosOsServicos.length === 0 && !dadosSalvos) {
+        alert("⚠️ Salve pelo menos um serviço!");
+        return;
+    }
+
+    if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico)) {
+        todosOsServicos.push(dadosSalvos);
+    }
+
+    let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
+    mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    mensagem += `👤 *Cliente:* ${numero}\n\n`;
+    mensagem += `📌 *SERVIÇOS:*\n`;
+
+    todosOsServicos.forEach((servico, index) => {
+        mensagem += `\n${index + 1}. *${servico.servico}*\n`;
+        mensagem += `   📏 Medida: ${servico.medida}\n`;
+        mensagem += `   💰 Valor: ${servico.valor}\n`;
+    });
+
+    mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+    window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
+    alert("✅ Orçamento completo! Abrindo WhatsApp...");
+}
+
+function irParaProximo() {
+    window.location.href = "06-gesso.html";
+}
+
+function voltar() {
+    window.history.back();
+}
+</script>
+
+</body>
+</html>
