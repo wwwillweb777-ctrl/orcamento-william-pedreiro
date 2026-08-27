@@ -4,65 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alvenaria - William Pedreiro</title>
-    <link rel="stylesheet" href="../css/estilo.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f0f4f8; padding: 10px; }
+        .pagina { max-width: 450px; margin: 0 auto; background: #002f6c; padding: 20px; border-radius: 20px; border-top: 4px solid #D4AF37; }
+        h1 { font-size: 26px; color: #fff; text-align: center; margin-bottom: 20px; }
+        
+        /* REGRAS DE CONVERSÃO */
+        .regra-importante { background: rgba(255,200,0,0.2); border: 2px solid #ffcc00; padding: 12px; border-radius: 8px; margin: 15px 0; font-size: 14px; text-align: center; font-weight: bold; color: #fff; }
+        .aviso-erro { background: rgba(255,0,0,0.2); border: 1px solid red; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px; text-align: center; color: #fff; }
+        .correto { color: #0f0; font-weight: bold; }
+        .errado { color: #f44; font-weight: bold; text-decoration: line-through; }
+        .tabela-conversao { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; margin: 15px 0; }
+        .linha { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 13px; color: #fff; }
+        .medida { font-weight: bold; color: #D4AF37; }
+        
+        /* CAMPOS */
+        label { font-weight: bold; color: #fff; display: block; margin-bottom: 5px; margin-top: 15px; }
+        input { width: 100%; padding: 12px; border: 2px solid #D4AF37; border-radius: 8px; font-size: 16px; margin-bottom: 10px; background: rgba(255,255,255,0.9); }
+        
+        /* BOTÕES — TODOS OS BOTÕES AQUI! */
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #fff; cursor: pointer; margin-top: 10px; }
+        .btn-calcular { background: #f57c00; }    <!-- 🟠 CALCULAR -->
+        .btn-salvar { background: #17a2b8; }       <!-- 🔵 SALVAR -->
+        .btn-proximo { background: #28a745; }      <!-- 🟢 PRÓXIMO -->
+        .btn-voltar { background: #d32f2f; }       <!-- 🔴 VOLTAR -->
+        
+        /* RESULTADO */
+        .resultado { background: rgba(0,0,0,0.3); border: 2px solid #ffcc00; border-radius: 10px; padding: 20px; margin-top: 25px; text-align: center; font-size: 20px; line-height: 2; color: #fff; display: none; }
+        .valor-final { color: #0f0; font-weight: bold; font-size: 26px; }
+        .texto-explicativo { text-align: center; font-size: 14px; color: #D4AF37; margin-top: -10px; margin-bottom: 10px; font-style: italic; }
+        
+        /* MATERIAIS */
+        .tabela-materiais { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; margin: 15px 0; display: none; }
+        .material { font-weight: bold; color: #D4AF37; }
+        .dica { background: rgba(0,255,0,0.1); border: 1px solid #0f0; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px; color: #fff; line-height: 1.8; }
+    </style>
 </head>
 <body>
-    <div class="pagina">
-        <h1>🧱 ALVENARIA — R$52,00/M²</h1>
 
-        <div class="regra-importante">
-            ⚠️ <strong>REGRA OBRIGATÓRIA!</strong><br>
-            SEMPRE converta centímetro para metros!<br>
-            Se não converter, o cálculo <strong>NÃO SAI CORRETO</strong>.
-        </div>
+<div class="pagina">
+    <h1>🧱 ALVENARIA — R$52,00/M²</h1>
 
-        <div class="aviso-erro">
-            <strong>❌ ERRO COMUM:</strong><br>
-            4cm = <span class="correto">0,04</span> — NÃO escreva 0,4!
-        </div>
-
-        <div class="tabela-conversao">
-            <div class="linha"><span class="medida">1 cm</span><span>➡️ 0,01 m</span></div>
-            <div class="linha"><span class="medida">4 cm</span><span>➡️ 0,04 m</span></div>
-            <div class="linha"><span class="medida">10 cm</span><span>➡️ 0,10 m</span></div>
-            <div class="linha"><span class="medida">1 m</span><span>➡️ 1,00 m</span></div>
-        </div>
-
-        <label>📏 Comprimento (metros):</label>
-        <input type="text" id="comprimento" placeholder="Ex: 5,00">
-
-        <label>📏 Altura (metros):</label>
-        <input type="text" id="altura" placeholder="Ex: 2,80">
-
-        <button class="btn btn-calcular" onclick="calcular()">CALCULAR VALOR</button>
-        
-        <div class="resultado" id="resultado" style="display:none;">
-            <p>Área Total: <span id="area" class="valor-final">0</span> M²</p>
-            <p>Valor Total: <span id="valor" class="valor-final">R$ 0,00</span></p>
-        </div>
-
-        <button class="btn btn-voltar" onclick="window.history.back()">VOLTAR</button>
+    <div class="regra-importante">
+        ⚠️ <strong>REGRA OBRIGATÓRIA!</strong><br>
+        SEMPRE converta centímetro para metros!<br>
+        Se não converter, o cálculo <strong>NÃO SAI CORRETO</strong>!
     </div>
 
+    <div class="aviso-erro">
+        <strong>❌ ERRO COMUM:</strong><br>
+        4cm = <span class="correto">0,04</span> — NÃO escreva <span class="errado">0,4</span>!
+    </div>
+
+    <div class="tabela-conversao">
+        <div class="linha"><span class="medida">1 cm</span><span>➡️ 0,01 m</span></div>
+        <div class="linha"><span class="medida">4 cm</span><span>➡️ 0,04 m</span></div>
+        <div class="linha"><span class="medida">10 cm</span><span>➡️ 0,10 m</span></div>
+        <div class="linha"><span class="medida">1 m</span><span>➡️ 1,00 m</span></div>
+    </div>
+
+    <label>📏 Comprimento (Horizontal):</label>
+    <input type="text" id="largura" placeholder="Ex: 4,00 metros">
+
+    <label>📏 Altura (Vertical):</label>
+    <input type="text" id="altura" placeholder="Ex: 2,80 metros">
+
+    <!-- 🟠 BOTÃO CALCULAR -->
+    <button class="btn btn-calcular" onclick="calcular()">CALCULAR VALOR</button>
+
+    <!-- RESULTADO -->
+    <div class="resultado" id="resultado">
+        <p><strong>Serviço:</strong> ALVENARIA</p>
+        <p><strong>Área Total:</strong> <span id="area" class="valor-final">0</span> M²</p>
+        <p class="texto-explicativo">Preço: R$ 52,00 por m²</p>
+        <p><strong>Valor Total:</strong> <span id="valor" class="valor-final">R$ 0,00</span></p>
+    </div>
+
+    <!-- 📦 MATERIAIS — ALVENARIA NÃO USA TRAÇO, MAS DEIXAMOS ESTRUTURA PRONTA -->
+    <div class="tabela-materiais" id="areaMateriais">
+        <h3 style="color:#D4AF37; text-align:center; margin-bottom:10px;">📦 MATERIAIS NECESSÁRIOS</h3>
+        <div class="linha"><span class="material">🧱 Tijolos / Blocos</span><span id="qtd-tijolo">Conforme medida</span></div>
+        <div class="linha"><span class="material">🏖️ Argamassa</span><span>Conforme projeto</span></div>
+        <div class="linha"><span class="material">📏 Pedra / Fundação</span><span>Conforme projeto</span></div>
+    </div>
+
+    <div class="dica">
+        <strong>💡 DICAS IMPORTANTES:</strong><br>
+        • Compre sempre um pouco mais para não faltar<br>
+        • Verifique o tipo de bloco: 10cm, 15cm ou 20cm<br>
+        • Contar com traço de argamassa adequado<br>
+        • Considerar altura de viga e pingadeira
+    </div>
+
+    <!-- 🔵 BOTÃO SALVAR -->
+    <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
+
+    <!-- 🟢 BOTÃO PRÓXIMO -->
+    <button class="btn btn-proximo" onclick="irParaProximo()">➡️ PRÓXIMO</button>
+
+    <!-- 🔴 BOTÃO VOLTAR -->
+    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
+</div>
+
 <script>
-const PRECO = 52;
+const PRECO_M2 = 52; // R$52,00 por m²
+let dadosSalvos = null;
+
+// PEGA VALOR E CONVERTA VÍRGULA PARA PONTO
+function obterValor(id) {
+    return parseFloat(document.getElementById(id).value.replace(',', '.')) || 0;
+}
 
 function calcular() {
-    const comprimento = parseFloat(document.getElementById('comprimento').value.replace(',', '.'));
-    const altura = parseFloat(document.getElementById('altura').value.replace(',', '.'));
+    const larg = obterValor('largura');
+    const alt = obterValor('altura');
 
-    if (!comprimento || !altura || comprimento <= 0 || altura <= 0) {
+    if(!larg || !alt || larg <= 0 || alt <= 0) {
         alert("⚠️ Digite medidas válidas maiores que zero!");
         return;
     }
 
-    const area = comprimento * altura;
-    const valor = area * PRECO;
+    const area = larg * alt;
+    const valor = area * PRECO_M2;
 
+    // FORMATA COM VÍRGULA PADRÃO BRASILEIRO
     document.getElementById('area').textContent = area.toFixed(2).replace('.', ',');
     document.getElementById('valor').textContent = `R$ ${valor.toFixed(2).replace('.', ',')}`;
+    
+    // MOSTRA RESULTADO
     document.getElementById('resultado').style.display = 'block';
+    document.getElementById('areaMateriais').style.display = 'block';
+
+    // GUARDA DADOS PARA SALVAR
+    dadosSalvos = {
+        servico: "ALVENARIA",
+        area: area.toFixed(2).replace('.', ','),
+        valor: `R$ ${valor.toFixed(2).replace('.', ',')}`
+    };
+}
+
+// SALVAR — BOTÃO 🔵
+function salvarItem() {
+    if(!dadosSalvos) {
+        alert("⚠️ Calcule primeiro antes de salvar!");
+        return;
+    }
+    localStorage.setItem('ultimoServico', JSON.stringify(dadosSalvos));
+    alert("✅ SALVO COM SUCESSO! Pode prosseguir.");
+}
+
+// PRÓXIMO — BOTÃO 🟢
+function irParaProximo() {
+    if(!dadosSalvos) {
+        alert("⚠️ Calcule e salve antes de prosseguir!");
+        return;
+    }
+    // Vai para o próximo serviço — REBOCO
+    window.location.href = "02-reboco.html";
+}
+
+// VOLTAR — BOTÃO 🔴
+function voltar() {
+    window.history.back();
 }
 </script>
+
 </body>
 </html>
