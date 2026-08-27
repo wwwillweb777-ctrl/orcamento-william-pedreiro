@@ -22,6 +22,7 @@
         .btn-calcular { background: #ff8800; }
         .btn-salvar { background: #17a2b8; }
         .btn-whatsapp { background: #25d366; }
+        .btn-resumo { background: #6f42c1; }
         .btn-proximo { background: #28a745; }
         .btn-voltar { background: #d32f2f; }
         
@@ -104,6 +105,9 @@
 
     <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
     <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
+    
+    <!-- ✅ BOTÃO DE RESUMO GERAL ADICIONADO! -->
+    <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
 
     <div class="campo-whats" id="area-whats">
         <label>📱 Seu WhatsApp:</label>
@@ -116,11 +120,10 @@
 </div>
 
 <script>
-const PRECO_M2 = 40; // ✅ PREÇO FIXO: R$ 40,00 por m²
+const PRECO_M2 = 40;
 const SEU_NUMERO = "5531990721928";
 const TOTAL_ETAPAS = 7;
 
-let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
 let dadosSalvos = null;
 
 function obterValor(id) {
@@ -144,16 +147,13 @@ function calcular() {
         return;
     }
 
-    // ✅ COMPRIMENTO × ALTURA = ÁREA × PREÇO/m² — MESMA LÓGICA!
     const area = larg * alt;
-    const valorFinal = area * PRECO_M2; // R$ 40,00 × m²
+    const valorFinal = area * PRECO_M2;
 
-    // 📦 Cálculo aproximado de materiais
-    const qtdCaixas = Math.ceil(area * 1.05); // +5% de perda
-    const sacosArgamassa = Math.ceil(area / 3); // ~3m² por saco
-    const kgRejunte = Math.ceil(area * 0.3); // ~300g por m²
+    const qtdCaixas = Math.ceil(area * 1.05);
+    const sacosArgamassa = Math.ceil(area / 3);
+    const kgRejunte = Math.ceil(area * 0.3);
 
-    // ✅ EXIBE — 1m × 1m = 1m² → R$ 40,00!
     document.getElementById('area').textContent = formatarNumero(area) + ' m²';
     document.getElementById('valor').textContent = 'R$ ' + formatarNumero(valorFinal);
     document.getElementById('qtd-ceramica').textContent = qtdCaixas + ' caixas (+5% de perda)';
@@ -166,12 +166,7 @@ function calcular() {
     dadosSalvos = {
         servico: "CERÂMICA",
         medida: formatarNumero(area) + ' m²',
-        valor: 'R$ ' + formatarNumero(valorFinal),
-        materiais: {
-            ceramica: qtdCaixas + ' caixas',
-            argamassa: sacosArgamassa + ' sacos',
-            rejunte: kgRejunte + ' kg'
-        }
+        valor: 'R$ ' + formatarNumero(valorFinal)
     };
 }
 
@@ -180,7 +175,7 @@ function salvarItem() {
         alert("⚠️ Calcule primeiro antes de salvar!");
         return;
     }
-    dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     dadosAcumulados.push({ ...dadosSalvos });
     localStorage.setItem('orcamentoCompleto', JSON.stringify(dadosAcumulados));
     alert(`✅ SALVO! Total de serviços: ${dadosAcumulados.length}`);
@@ -203,15 +198,15 @@ function enviarWhatsApp() {
         return;
     }
 
-    const todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    let todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     
-    if(todosOsServicos.length === 0 && !dadosSalvos) {
-        alert("⚠️ Salve pelo menos um serviço!");
-        return;
-    }
-
     if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico)) {
         todosOsServicos.push(dadosSalvos);
+    }
+
+    if(todosOsServicos.length === 0) {
+        alert("⚠️ Salve pelo menos um serviço!");
+        return;
     }
 
     let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
@@ -232,7 +227,7 @@ function enviarWhatsApp() {
 }
 
 function irParaProximo() {
-    window.location.href = "05-concreto.html";
+    window.location.href = "05-contrapiso.html";
 }
 
 function voltar() {
