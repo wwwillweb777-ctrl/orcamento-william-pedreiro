@@ -38,6 +38,8 @@
         
         .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #fff; cursor: pointer; margin-top: 10px; }
         .btn-calcular { background: #ff8800; }
+        .btn-salvar { background: #17a2b8; }
+        .btn-whatsapp { background: #25d366; }
         .btn-resumo { background: #6f42c1; }
         .btn-voltar { background: #d32f2f; }
         
@@ -54,6 +56,17 @@
             display: none;
         }
         .valor-final { color: #0f0; font-weight: bold; font-size: 26px; }
+        .aviso-perda { font-size: 14px; color: #aaa; margin-top: 15px; }
+        
+        .campo-whats {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #25d366;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            display: none;
+        }
+        .campo-whats label { margin-top: 0; color: #25d366; }
     </style>
 </head>
 <body>
@@ -102,19 +115,36 @@
         <span class="valor-final" id="qtde15">0</span> unidades</p>
         <p><strong>⬜ Bloco de Concreto:</strong><br>
         <span class="valor-final" id="qtdeBlocos">0</span> unidades</p>
-        <p style="font-size: 14px; color: #aaa; margin-top: 15px;">* Considere comprar 5% a mais para perdas e recortes</p>
+        <p class="aviso-perda">* Considere comprar 5% a mais para perdas e recortes</p>
     </div>
 
-    <!-- ✅ BOTÃO DE RESUMO GERAL ADICIONADO! -->
+    <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
+    <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
     <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
+
+    <div class="campo-whats" id="area-whats">
+        <label>📱 Seu WhatsApp:</label>
+        <input type="tel" id="whats-cliente" placeholder="Ex: 31999998888">
+        <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ CONFIRMAR E ENVIAR</button>
+    </div>
 
     <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
 </div>
 
 <script>
+const SEU_NUMERO = "5531990721928";
+let dadosSalvos = null;
+
 function obterValor(id) {
     const valor = document.getElementById(id).value.replace(',', '.');
     return parseFloat(valor) || 0;
+}
+
+function formatarNumero(valor, decimais = 2) {
+    return valor.toLocaleString('pt-BR', { 
+        minimumFractionDigits: decimais, 
+        maximumFractionDigits: decimais 
+    });
 }
 
 function calcularTijolos() {
@@ -128,13 +158,81 @@ function calcularTijolos() {
 
     const area = larg * alt;
     
-    document.getElementById('metragem').textContent = area.toFixed(2).replace('.', ',');
+    document.getElementById('metragem').textContent = formatarNumero(area) + ' m²';
     document.getElementById('qtde10').textContent = Math.ceil(area * 18);
     document.getElementById('qtde15').textContent = Math.ceil(area * 21);
     document.getElementById('qtdeBlocos').textContent = Math.ceil(area * 13);
 
     document.getElementById('areaResultado').style.display = 'block';
     document.getElementById('areaResultado').scrollIntoView({ behavior: 'smooth' });
+
+    dadosSalvos = {
+        servico: "CALC. TIJOLOS",
+        medida: formatarNumero(area) + ' m²',
+        valor: "---",
+        tijolos10: Math.ceil(area * 18),
+        tijolos15: Math.ceil(area * 21),
+        blocos: Math.ceil(area * 13)
+    };
+}
+
+function salvarItem() {
+    if(!dadosSalvos) {
+        alert("⚠️ Calcule primeiro antes de salvar!");
+        return;
+    }
+    let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    dadosAcumulados.push({ ...dadosSalvos });
+    localStorage.setItem('orcamentoCompleto', JSON.stringify(dadosAcumulados));
+    alert(`✅ SALVO! Total de serviços: ${dadosAcumulados.length}`);
+}
+
+function mostrarCampoWhatsApp() {
+    const todos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    if(todos.length === 0 && !dadosSalvos) {
+        alert("⚠️ Calcule e salve pelo menos um serviço antes de enviar!");
+        return;
+    }
+    document.getElementById('area-whats').style.display = 'block';
+    document.getElementById('area-whats').scrollIntoView({ behavior: 'smooth' });
+}
+
+function enviarWhatsApp() {
+    const numero = document.getElementById('whats-cliente').value.replace(/\D/g, '');
+    if(numero.length < 10) {
+        alert("⚠️ Digite seu WhatsApp com DDD! Ex: 31999998888");
+        return;
+    }
+
+    let todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    
+    if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico)) {
+        todosOsServicos.push(dadosSalvos);
+    }
+
+    if(todosOsServicos.length === 0) {
+        alert("⚠️ Salve pelo menos um serviço!");
+        return;
+    }
+
+    let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
+    mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    mensagem += `👤 *Cliente:* ${numero}\n\n`;
+    mensagem += `📌 *SERVIÇOS:*\n`;
+
+    todosOsServicos.forEach((servico, index) => {
+        mensagem += `\n${index + 1}. *${servico.servico}*\n`;
+        mensagem += `   📏 Medida: ${servico.medida}\n`;
+        if(servico.valor !== "---") mensagem += `   💰 Valor: ${servico.valor}\n`;
+        if(servico.tijolos10) mensagem += `   🧱 Tijolo 10cm: ${servico.tijolos10} unidades\n`;
+        if(servico.tijolos15) mensagem += `   🧱 Tijolo 15cm: ${servico.tijolos15} unidades\n`;
+        if(servico.blocos) mensagem += `   ⬜ Blocos: ${servico.blocos} unidades\n`;
+    });
+
+    mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+    window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
+    alert("✅ Orçamento completo! Abrindo WhatsApp...");
 }
 
 function voltar() {
