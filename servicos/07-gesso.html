@@ -115,12 +115,12 @@
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ FINALIZAR E ENVIAR ORÇAMENTO</button>
     </div>
 
-    <!-- ✅ BOTÕES DE NAVEGAÇÃO CORRIGIDOS! -->
+    <!-- ✅ NAVEGAÇÃO CORRIGIDA! -->
     <div class="navegacao">
-        <button class="btn btn-proximo" onclick="irParaProximo()">➡️ PRÓXIMO (7/8)</button>
+        <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
+        <button class="btn btn-proximo" onclick="irParaProximo()">PRÓXIMO ➡️</button>
     </div>
     <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
-    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
 </div>
 
 <script>
@@ -228,23 +228,18 @@ function enviarWhatsApp() {
     mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
     mensagem += `💵 *VALOR TOTAL: R$ ${valorTotalGeral.toLocaleString('pt-BR', {minimumFractionDigits:2})}*`;
 
-    window.open(`https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`, '_blank');
-    
-    setTimeout(() => {
-        window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
-    }, 800);
-    
+    window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
     alert("✅ Orçamento completo enviado!");
 }
 
-// ✅ CORRIGIDO: PRÓXIMO vai para a Calculadora de Tijolos!
-function irParaProximo() {
-    window.location.href = "07-calculadora-tijolos.html";
+// ✅ VOLTAR → Calculadora de Tijolos (06)
+function voltar() {
+    window.location.href = "06-calculadora.tijolos.html";
 }
 
-// ✅ CORRIGIDO: VOLTAR vai direto para a tela dos 8 botões!
-function voltar() {
-    window.location.href = "../index.html#pg-servicos";
+// ✅ PRÓXIMO → Resumo Geral (08)
+function irParaProximo() {
+    window.location.href = "08-resumo-geral.html";
 }
 </script>
 
