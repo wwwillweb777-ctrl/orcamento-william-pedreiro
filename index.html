@@ -15,25 +15,10 @@
         h1 { font-size: 26px; color: #ffffff; text-align: center; margin: 15px 0; }
         .info-inicial { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 20px; color: #ffffff; }
         .info-inicial strong { color: #D4AF37; }
-        .aviso-senha { background: rgba(255, 255, 255, 0.1); border: 2px solid #D4AF37; border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center; color: #ffffff; }
-        .aviso-senha strong { display:block; font-size:20px; color:#D4AF37; margin-bottom:10px; }
         .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #ffffff; cursor: pointer; margin-bottom: 10px; }
         .btn-comecar { background: #25d366; font-size: 22px; }
         .btn-servico { background: #0047ab; text-align: left; border: 1px solid #D4AF37; font-size: 17px; }
         .btn-voltar { background: #d32f2f; }
-        .btn-ja-paguei { background: #25d366; font-size: 22px; box-shadow: 0 0 10px rgba(255,255,255,0.5); border: 2px solid #ffffff; }
-        input { width: 100%; padding: 12px; border: 2px solid #D4AF37; border-radius: 8px; font-size: 16px; margin-bottom: 15px; background: rgba(255,255,255,0.9); }
-        label { font-weight: bold; color: #ffffff; }
-        .area-pix { text-align: center; margin: 15px 0; }
-        .container-logo-valor { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
-        .logo-pix { width: 120px; }
-        .valor-pix { font-size: 28px; font-weight: bold; color: #ffffff; }
-        .instrucao { color: #ffffff; font-size: 18px; margin-bottom: 15px; line-height: 1.5; }
-        .caixa-chave { background: #ffffff; border: 3px solid #002f6c; border-radius: 15px; padding: 20px; }
-        .chave-pix { background: #D4AF37; color: #000000; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 17px; word-break: break-all; border: 2px solid #000; }
-        .img-topo-lib { width: 100%; max-width: 200px; display: block; margin: 0 auto 20px auto; border-radius: 10px; border: 3px solid #D4AF37; }
-        .campo-whats { background: rgba(255, 255, 255, 0.1); border: 2px solid #D4AF37; border-radius: 15px; padding: 15px; margin: 20px 0; text-align: center; }
-        .btn-copiar-pix { background: #D4AF37; margin-top: 15px; font-size: 18px; }
     </style>
 </head>
 <body>
@@ -64,10 +49,10 @@
         <button class="btn btn-comecar" onclick="comecar()">Entrar</button>
     </div>
 
-    <!-- PÁGINA DE SERVIÇOS — NOMES IGUAIS AO GITHUB! -->
+    <!-- PÁGINA DE SERVIÇOS -->
     <div id="pg-servicos" class="pagina oculta">
         <h1>Qual serviço será feito?</h1>
-        <button class="btn btn-servico" onclick="irPara('servicos/01-alvenaria.html')">1 - Assentamento de tijolos (R$52,00/M²)</button>
+        <button class="btn btn-servico" onclick="irPara('servicos/01-alvenaria.html')">1 - ALVENARIA (R$52,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/02-reboco.html')">2 - REBOCO (R$25,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/03-porcelanato.html')">3 - PORCELANATO (R$60,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/04-ceramica.html')">4 - CERÂMICA (R$40,00/M²)</button>
@@ -78,50 +63,7 @@
         <button class="btn btn-voltar" onclick="voltarParaPrincipal()">VOLTAR</button>
     </div>
 
-    <!-- PÁGINA DE SENHA -->
-    <div id="pg-senha" class="pagina oculta">
-        <img src="imagens/olhos-leao.webp" alt="Olhos do Leão" class="img-topo-lib">
-        <h1>Obrigado pela preferência</h1>
-        <div class="aviso-senha">
-            <strong>⚠️ Aviso Importante</strong>
-            <p>Após sair, os orçamentos salvos permanecem até que você clique em LIMPAR TUDO no Resumo Geral.</p>
-        </div>
-        <div class="area-pix">
-            <div class="container-logo-valor">
-                <img src="imagens/pix.webp" alt="Logo Pix" class="logo-pix">
-                <span class="valor-pix">R$: 5,00</span>
-            </div>
-            <p class="instrucao">👉 Clique para copiar a chave!</p>
-            <div class="caixa-chave">
-                <p class="chave-pix">williamempreiteiro007@gmail.com</p>
-                <button class="btn btn-copiar-pix" onclick="copiarPix()">📋 COPIAR CHAVE PIX</button>
-            </div>
-        </div>
-        <div class="campo-whats">
-            <label>🔑 Seu WhatsApp:</label>
-            <input type="text" id="whats_cliente" placeholder="Ex: 31999998888">
-        </div>
-        <button class="btn btn-ja-paguei" onclick="avisarPagamento()">✅ JÁ PAGUEI - PEDIR SENHA</button>
-        <input type="password" id="campo-senha" placeholder="Digite a senha...">
-        <button class="btn" style="background:#28a745;" onclick="validarSenha()">🔓 DESBLOQUEAR</button>
-        <button class="btn btn-voltar" onclick="voltarParaServicos()">VOLTAR</button>
-    </div>
-
     <script>
-        const SEU_NUMERO_WHATSAPP = "5531990721928";
-        const CHAVE_PIX = "williamempreiteiro007@gmail.com";
-        const SENHA_LIBERACAO = "12345";
-
-        function verificarLiberacao() {
-            return localStorage.getItem('liberado') === 'sim';
-        }
-        function liberarAcesso() {
-            localStorage.setItem('liberado', 'sim');
-        }
-        function resetarLiberacao() {
-            localStorage.removeItem('liberado');
-        }
-
         function mostrarPagina(idPagina) {
             document.querySelectorAll('.pagina').forEach(p => p.classList.add('oculta'));
             document.getElementById(idPagina).classList.remove('oculta');
@@ -130,51 +72,15 @@
 
         function comecar() {
             localStorage.removeItem('orcamentoCompleto');
-            if (verificarLiberacao()) {
-                mostrarPagina('pg-servicos');
-            } else {
-                mostrarPagina('pg-senha');
-            }
+            mostrarPagina('pg-servicos');
         }
 
         function voltarParaPrincipal() { 
-            resetarLiberacao();
             mostrarPagina('pg-principal'); 
         }
-        function voltarParaServicos() { mostrarPagina('pg-servicos'); }
 
         function irPara(url) {
-            if (verificarLiberacao()) {
-                window.location.href = url;
-            } else {
-                mostrarPagina('pg-senha');
-            }
-        }
-
-        function copiarPix() {
-            navigator.clipboard.writeText(CHAVE_PIX)
-                .then(() => alert("✅ Chave PIX copiada!\n" + CHAVE_PIX))
-                .catch(() => alert("Chave: " + CHAVE_PIX));
-        }
-
-        function avisarPagamento() {
-            const num = document.getElementById('whats_cliente').value.replace(/\D/g, '');
-            if (num.length < 10) { alert("⚠️ Digite um WhatsApp válido!"); return; }
-            const msg = encodeURIComponent("Olá William! Paguei o PIX. Preciso da senha! 🙏");
-            window.open(`https://wa.me/${SEU_NUMERO_WHATSAPP}?text=${msg}`, '_blank');
-            alert("✅ Mensagem enviada! Aguarde a senha.");
-        }
-
-        function validarSenha() {
-            const s = document.getElementById('campo-senha').value.trim();
-            if (s === SENHA_LIBERACAO) {
-                liberarAcesso();
-                alert("✅ Acesso LIBERADO! 🎉");
-                mostrarPagina('pg-servicos');
-            } else {
-                alert("❌ Senha incorreta!");
-                document.getElementById('campo-senha').value = "";
-            }
+            window.location.href = url;
         }
 
         window.addEventListener('load', function() {
