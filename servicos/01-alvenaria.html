@@ -214,15 +214,17 @@ function enviarWhatsApp() {
     mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
     window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
-    alert("✅ Orçamento completo! Abrindo WhatsApp...");
+    alert("✅ Orçamento enviado!");
 }
 
+// ✅ CORRIGIDO — PRÓXIMO: mesmo pasta, só o nome do arquivo
 function irParaProximo() {
     window.location.href = "02-reboco.html";
 }
 
+// ✅ CORRIGIDO — VOLTAR: sobe uma pasta → vai para index.html
 function voltar() {
-    window.location.href = "index.html";
+    window.location.href = "../index.html";
 }
 </script>
 
