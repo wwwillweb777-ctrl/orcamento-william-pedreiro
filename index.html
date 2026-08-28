@@ -112,7 +112,16 @@
         const CHAVE_PIX = "williamempreiteiro007@gmail.com";
         const SENHA_LIBERACAO = "12345";
 
-        let jaPagouELiberado = false;
+        // ✅ SALVA A LIBERAÇÃO NO NAVEGADOR — NÃO PEDE SENHA DE NOVO!
+        function verificarLiberacao() {
+            return localStorage.getItem('liberado') === 'sim';
+        }
+        function liberarAcesso() {
+            localStorage.setItem('liberado', 'sim');
+        }
+        function resetarLiberacao() {
+            localStorage.removeItem('liberado');
+        }
 
         function mostrarPagina(idPagina) {
             document.querySelectorAll('.pagina').forEach(p => p.classList.add('oculta'));
@@ -122,14 +131,24 @@
 
         function comecar() {
             localStorage.removeItem('orcamentoCompleto');
-            mostrarPagina('pg-servicos');
+            // ✅ Se JÁ foi liberado, VAI DIRETO para serviços sem pedir senha!
+            if (verificarLiberacao()) {
+                mostrarPagina('pg-servicos');
+            } else {
+                mostrarPagina('pg-senha');
+            }
         }
 
-        function voltarParaPrincipal() { mostrarPagina('pg-principal'); }
+        function voltarParaPrincipal() { 
+            // ✅ Só reseta a senha se VOLTAR PARA A TELA DO LEÃO!
+            resetarLiberacao();
+            mostrarPagina('pg-principal'); 
+        }
         function voltarParaServicos() { mostrarPagina('pg-servicos'); }
 
         function irPara(url) {
-            if (jaPagouELiberado) {
+            // ✅ Se já está liberado, VAI DIRETO — sem pedir senha de novo!
+            if (verificarLiberacao()) {
                 window.location.href = url;
             } else {
                 mostrarPagina('pg-senha');
@@ -153,7 +172,7 @@
         function validarSenha() {
             const s = document.getElementById('campo-senha').value.trim();
             if (s === SENHA_LIBERACAO) {
-                jaPagouELiberado = true;
+                liberarAcesso(); // ✅ MARCA COMO LIBERADO!
                 alert("✅ Acesso LIBERADO! 🎉");
                 mostrarPagina('pg-servicos');
             } else {
@@ -162,7 +181,7 @@
             }
         }
 
-        // ✅ CORRIGIDO: Reconhece #pg-servicos e abre direto na tela dos 8 botões!
+        // ✅ Quando voltar da Alvenaria — NÃO Pede senha de novo!
         window.addEventListener('load', function() {
             if (window.location.hash === '#pg-servicos') {
                 mostrarPagina('pg-servicos');
