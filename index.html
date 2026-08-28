@@ -3,164 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>William Pedreiro - Orçamentos</title>
+    <title>Alvenaria - William Pedreiro</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body { background: #f0f4f8; padding: 10px; }
         .pagina { max-width: 450px; margin: 0 auto; background: #002f6c; padding: 20px; border-radius: 20px; border-top: 4px solid #D4AF37; color: #fff; }
-        .oculta { display: none !important; }
-        .cabecalho { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .leao-cabeca { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid #D4AF37; }
-        .info-contato p { font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 8px; }
-        h1 { font-size: 26px; color: #ffffff; text-align: center; margin: 15px 0; }
-        .info-inicial { background: rgba(255, 255, 255, 0.1); padding: 15px; border-radius: 15px; margin-bottom: 20px; color: #ffffff; }
-        .info-inicial strong { color: #D4AF37; }
-        .aviso-senha { background: rgba(255, 255, 255, 0.1); border: 2px solid #D4AF37; border-radius: 15px; padding: 20px; margin: 20px 0; text-align: center; color: #ffffff; }
-        .aviso-senha strong { display:block; font-size:20px; color:#D4AF37; margin-bottom:10px; }
-        .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #ffffff; cursor: pointer; margin-bottom: 10px; }
-        .btn-comecar { background: #25d366; font-size: 22px; }
-        .btn-servico { background: #0047ab; text-align: left; border: 1px solid #D4AF37; font-size: 17px; }
+        h1 { font-size: 26px; color: #fff; text-align: center; margin-bottom: 20px; }
+        
+        .regra-importante { background: rgba(255,200,0,0.2); border: 2px solid #ffcc00; padding: 12px; border-radius: 8px; margin: 15px 0; font-size: 14px; text-align: center; font-weight: bold; color: #fff; }
+        .aviso-erro { background: rgba(255,0,0,0.2); border: 1px solid red; padding: 10px; border-radius: 8px; margin: 10px 0; font-size: 13px; text-align: center; color: #fff; }
+        .correto { color: #0f0; font-weight: bold; }
+        .errado { color: #f44; font-weight: bold; text-decoration: line-through; }
+        .tabela-conversao { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; margin: 15px 0; }
+        .linha { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid rgba(255,255,255,0.2); font-size: 13px; color: #fff; }
+        .medida { font-weight: bold; color: #D4AF37; }
+        
+        label { font-weight: bold; color: #fff; display: block; margin-bottom: 5px; margin-top: 15px; }
+        input { width: 100%; padding: 12px; border: 2px solid #D4AF37; border-radius: 8px; font-size: 16px; margin-bottom: 10px; background: rgba(255,255,255,0.9); }
+        
+        .btn { width: 100%; padding: 15px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; color: #fff; cursor: pointer; margin-top: 10px; }
+        .btn-calcular { background: #ff8800; }
+        .btn-salvar { background: #17a2b8; }
+        .btn-whatsapp { background: #25d366; }
+        .btn-resumo { background: #6f42c1; }
+        .btn-proximo { background: #28a745; }
         .btn-voltar { background: #d32f2f; }
-        .btn-ja-paguei { background: #25d366; font-size: 22px; box-shadow: 0 0 10px rgba(255,255,255,0.5); border: 2px solid #ffffff; }
-        input { width: 100%; padding: 12px; border: 2px solid #D4AF37; border-radius: 8px; font-size: 16px; margin-bottom: 15px; background: rgba(255,255,255,0.9); }
-        label { font-weight: bold; color: #ffffff; }
-        .area-pix { text-align: center; margin: 15px 0; }
-        .container-logo-valor { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
-        .logo-pix { width: 120px; }
-        .valor-pix { font-size: 28px; font-weight: bold; color: #ffffff; }
-        .instrucao { color: #ffffff; font-size: 18px; margin-bottom: 15px; line-height: 1.5; }
-        .caixa-chave { background: #ffffff; border: 3px solid #002f6c; border-radius: 15px; padding: 20px; }
-        .chave-pix { background: #D4AF37; color: #000000; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 17px; word-break: break-all; border: 2px solid #000; }
-        .img-topo-lib { width: 100%; max-width: 200px; display: block; margin: 0 auto 20px auto; border-radius: 10px; border: 3px solid #D4AF37; }
-        .campo-whats { background: rgba(255, 255, 255, 0.1); border: 2px solid #D4AF37; border-radius: 15px; padding: 15px; margin: 20px 0; text-align: center; }
-        .btn-copiar-pix { background: #D4AF37; margin-top: 15px; font-size: 18px; }
+        
+        .resultado { background: rgba(0,0,0,0.3); border: 2px solid #ffcc00; border-radius: 10px; padding: 20px; margin-top: 25px; text-align: center; font-size: 20px; line-height: 2; color: #fff; display: none; }
+        .valor-final { color: #0f0; font-weight: bold; font-size: 28px; }
+        .preco-unitario { color: #ffd700; font-size: 16px; }
+        
+        .tabela-materiais { background: rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; margin: 20px 0; display: block; }
+        .titulo-materiais { color: #ffd700; font-size: 22px; font-weight: bold; text-align: center; margin-bottom: 15px; }
+        .item-material { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.15); font-size: 16px; }
+        .nome-material { color: #ffd700; }
+        
+        .dica { background: rgba(0,255,0,0.1); border: 1px solid #0f0; padding: 15px; border-radius: 8px; margin: 20px 0; font-size: 15px; color: #fff; line-height: 1.8; }
+        
+        .campo-whats { background: rgba(255,255,255,0.1); border: 2px solid #25d366; border-radius: 10px; padding: 15px; margin-top: 20px; display: none; }
+        .campo-whats label { margin-top: 0; color: #25d366; }
     </style>
 </head>
 <body>
 
-    <!-- PÁGINA PRINCIPAL -->
-    <div id="pg-principal" class="pagina">
-        <div class="cabecalho">
-            <img src="imagens/leao.webp" alt="Leão" class="leao-cabeca">
-            <div class="info-contato">
-                <p>William Pedreiro</p>
-                <p>Geral & Empreiteiro.</p>
-            </div>
-        </div>
+<div class="pagina">
+    <h1>🧱 ALVENARIA</h1>
 
-        <h1>Vai construir? Obtenha seu orçamento por aqui.</h1>
-        <div class="info-inicial">
-            <p><strong>📏 Medidas:</strong></p>
-            <p>Área = Altura × Largura</p>
-            <br>
-            <p><strong>💰 Valores:</strong></p>
-            <p>✅ ALVENARIA: R$52,00/M²</p>
-            <p>✅ REBOCO: R$25,00/M²</p>
-            <p>✅ PORCELANATO: R$60,00/M²</p>
-            <p>✅ CERÂMICA: R$40,00/M²</p>
-            <p>✅ CONCRETO: R$200,00/M³</p>
-            <p>✅ GESSO: R$20,00/M²</p>
-        </div>
-        <button class="btn btn-comecar" onclick="comecar()">Entrar</button>
+    <div class="regra-importante">
+        ⚠️ <strong>REGRA OBRIGATÓRIA!</strong><br>
+        SEMPRE converta centímetro para metros!<br>
+        Se não converter, o cálculo <strong>NÃO SAI CORRETO</strong>!
     </div>
 
-    <!-- PÁGINA DE SERVIÇOS -->
-    <div id="pg-servicos" class="pagina oculta">
-        <h1>Qual serviço será feito?</h1>
-        <button class="btn btn-servico" onclick="irPara('servicos/01-alvenaria.html')">1 - ALVENARIA (R$52,00/M²)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/02-reboco.html')">2 - REBOCO (R$25,00/M²)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/03-porcelanato.html')">3 - PORCELANATO (R$60,00/M²)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/04-ceramica.html')">4 - CERÂMICA (R$40,00/M²)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/05-concreto.html')">5 - CONCRETO (R$200,00/M³)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/07-calculadora-tijolos.html')">6 - 🧱 CALC. QUANTIDADE DE TIJOLOS</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/06-gesso.html')">7 - GESSO (R$20,00/M²)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/08-resumo-geral.html')">📊 8 - RESUMO GERAL / ORÇAMENTO FINAL</button>
-        <button class="btn btn-voltar" onclick="voltarParaPrincipal()">VOLTAR</button>
+    <div class="aviso-erro">
+        <strong>❌ ERRO COMUM:</strong><br>
+        4 cm = <span class="correto">0,04 m</span> — NÃO escreva <span class="errado">0,4</span>!
     </div>
 
-    <!-- PÁGINA DE SENHA -->
-    <div id="pg-senha" class="pagina oculta">
-        <img src="imagens/olhos-leao.webp" alt="Olhos do Leão" class="img-topo-lib">
-        <h1>Obrigado pela preferência</h1>
-        <div class="aviso-senha">
-            <strong>⚠️ Aviso Importante</strong>
-            <p>Após sair, os orçamentos salvos permanecem até que você clique em LIMPAR TUDO no Resumo Geral.</p>
-        </div>
-        <div class="area-pix">
-            <div class="container-logo-valor">
-                <img src="imagens/pix.webp" alt="Logo Pix" class="logo-pix">
-                <span class="valor-pix">R$: 5,00</span>
-            </div>
-            <p class="instrucao">👉 Clique para copiar a chave!</p>
-            <div class="caixa-chave">
-                <p class="chave-pix">williamempreiteiro007@gmail.com</p>
-                <button class="btn btn-copiar-pix" onclick="copiarPix()">📋 COPIAR CHAVE PIX</button>
-            </div>
-        </div>
-        <div class="campo-whats">
-            <label>🔑 Seu WhatsApp:</label>
-            <input type="text" id="whats_cliente" placeholder="Ex: 31999998888">
-        </div>
-        <button class="btn btn-ja-paguei" onclick="avisarPagamento()">✅ JÁ PAGUEI - PEDIR SENHA</button>
-        <input type="password" id="campo-senha" placeholder="Digite a senha...">
-        <button class="btn" style="background:#28a745;" onclick="validarSenha()">🔓 DESBLOQUEAR</button>
-        <button class="btn btn-voltar" onclick="voltarParaServicos()">VOLTAR</button>
+    <div class="tabela-conversao">
+        <div class="linha"><span class="medida">1 cm</span><span>➡️ 0,01 m</span></div>
+        <div class="linha"><span class="medida">4 cm</span><span>➡️ 0,04 m</span></div>
+        <div class="linha"><span class="medida">10 cm</span><span>➡️ 0,10 m</span></div>
+        <div class="linha"><span class="medida">1 m</span><span>➡️ 1,00 m</span></div>
     </div>
 
-    <script>
-        const SEU_NUMERO_WHATSAPP = "5531990721928";
-        const CHAVE_PIX = "williamempreiteiro007@gmail.com";
-        const SENHA_LIBERACAO = "12345";
+    <label>📏 Comprimento (metros):</label>
+    <input type="text" id="largura" placeholder="Ex: 4,00">
 
-        let jaPagouELiberado = false;
+    <label>📏 Altura (metros):</label>
+    <input type="text" id="altura" placeholder="Ex: 2,80">
 
-        function mostrarPagina(idPagina) {
-            document.querySelectorAll('.pagina').forEach(p => p.classList.add('oculta'));
-            document.getElementById(idPagina).classList.remove('oculta');
-            window.scrollTo(0, 0);
-        }
+    <button class="btn btn-calcular" onclick="calcular()">CALCULAR VALOR</button>
 
-        function comecar() {
-            localStorage.removeItem('orcamentoCompleto');
-            mostrarPagina('pg-servicos');
-        }
+    <div class="resultado" id="resultado">
+        <p><strong>Serviço:</strong> ALVENARIA</p>
+        <p><strong>Área Total:</strong> <span id="area" class="valor-final">0,00</span> m²</p>
+        <p class="preco-unitario">Preço: R$ 52,00 por m²</p>
+        <p><strong>Valor Total:</strong> <span id="valor" class="valor-final">R$ 0,00</span></p>
+    </div>
 
-        function voltarParaPrincipal() { mostrarPagina('pg-principal'); }
-        function voltarParaServicos() { mostrarPagina('pg-servicos'); }
+    <div class="tabela-materiais">
+        <p class="titulo-materiais">📦 MATERIAIS NECESSÁRIOS</p>
+        <div class="item-material">
+            <span class="nome-material">🧱 Tijolos / Blocos</span>
+            <span>Conforme medida</span>
+        </div>
+        <div class="item-material">
+            <span class="nome-material">🏖️ Argamassa</span>
+            <span>Conforme projeto</span>
+        </div>
+        <div class="item-material">
+            <span class="nome-material">📏 Pedra / Fundação</span>
+            <span>Conforme projeto</span>
+        </div>
+    </div>
 
-        function irPara(url) {
-            if (jaPagouELiberado) {
-                window.location.href = url;
-            } else {
-                mostrarPagina('pg-senha');
-            }
-        }
+    <div class="dica">
+        💡 <strong>DICAS IMPORTANTES:</strong><br>
+        • Compre sempre um pouco mais para não faltar<br>
+        • Verifique o tipo de bloco: 10 cm, 15 cm ou 20 cm<br>
+        • Contar com traço de argamassa adequado<br>
+        • Considerar altura de viga e pingadeira
+    </div>
 
-        function copiarPix() {
-            navigator.clipboard.writeText(CHAVE_PIX)
-                .then(() => alert("✅ Chave PIX copiada!\n" + CHAVE_PIX))
-                .catch(() => alert("Chave: " + CHAVE_PIX));
-        }
+    <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
+    <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
+    <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
 
-        function avisarPagamento() {
-            const num = document.getElementById('whats_cliente').value.replace(/\D/g, '');
-            if (num.length < 10) { alert("⚠️ Digite um WhatsApp válido!"); return; }
-            const msg = encodeURIComponent("Olá William! Paguei o PIX. Preciso da senha! 🙏");
-            window.open(`https://wa.me/${SEU_NUMERO_WHATSAPP}?text=${msg}`, '_blank');
-            alert("✅ Mensagem enviada! Aguarde a senha.");
-        }
+    <div class="campo-whats" id="area-whats">
+        <label>📱 Seu WhatsApp:</label>
+        <input type="tel" id="whats-cliente" placeholder="Ex: 31999998888">
+        <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ CONFIRMAR E ENVIAR</button>
+    </div>
 
-        function validarSenha() {
-            const s = document.getElementById('campo-senha').value.trim();
-            if (s === SENHA_LIBERACAO) {
-                jaPagouELiberado = true;
-                alert("✅ Acesso LIBERADO! 🎉");
-                mostrarPagina('pg-servicos');
-            } else {
-                alert("❌ Senha incorreta!");
-                document.getElementById('campo-senha').value = "";
-            }
-        }
-    </script>
+    <button class="btn btn-proximo" onclick="irParaProximo()">PRÓXIMO</button>
+    <button class="btn btn-voltar" onclick="voltar()">VOLTAR</button>
+</div>
+
+<script>
+const PRECO_M2 = 52;
+const SEU_NUMERO = "5531990721928";
+
+let dadosSalvos = null;
+
+function obterValor(id) {
+    const valor = document.getElementById(id).value.replace(',', '.');
+    return parseFloat(valor) || 0;
+}
+
+function formatarNumero(valor, decimais = 2) {
+    return valor.toLocaleString('pt-BR', { 
+        minimumFractionDigits: decimais, 
+        maximumFractionDigits: decimais 
+    });
+}
+
+function calcular() {
+    const larg = obterValor('largura');
+    const alt = obterValor('altura');
+
+    if(!larg || !alt || larg <= 0 || alt <= 0) {
+        alert("⚠️ Digite medidas válidas maiores que zero!");
+        return;
+    }
+
+    const area = larg * alt;
+    const valor = area * PRECO_M2;
+
+    document.getElementById('area').textContent = formatarNumero(area) + ' m²';
+    document.getElementById('valor').textContent = 'R$ ' + formatarNumero(valor);
+    document.getElementById('resultado').style.display = 'block';
+
+    dadosSalvos = {
+        servico: "ALVENARIA",
+        medida: formatarNumero(area) + ' m²',
+        valor: 'R$ ' + formatarNumero(valor)
+    };
+}
+
+function salvarItem() {
+    if(!dadosSalvos) {
+        alert("⚠️ Calcule primeiro antes de salvar!");
+        return;
+    }
+    let dadosAcumulados = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    dadosAcumulados.push({ ...dadosSalvos });
+    localStorage.setItem('orcamentoCompleto', JSON.stringify(dadosAcumulados));
+    alert(`✅ SALVO! Total de serviços: ${dadosAcumulados.length}`);
+}
+
+function mostrarCampoWhatsApp() {
+    const todos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    if(todos.length === 0 && !dadosSalvos) {
+        alert("⚠️ Calcule e salve pelo menos um serviço antes de enviar!");
+        return;
+    }
+    document.getElementById('area-whats').style.display = 'block';
+    document.getElementById('area-whats').scrollIntoView({ behavior: 'smooth' });
+}
+
+function enviarWhatsApp() {
+    const numero = document.getElementById('whats-cliente').value.replace(/\D/g, '');
+    if(numero.length < 10) {
+        alert("⚠️ Digite seu WhatsApp com DDD! Ex: 31999998888");
+        return;
+    }
+
+    const todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
+    
+    if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico)) {
+        todosOsServicos.push(dadosSalvos);
+    }
+
+    if(todosOsServicos.length === 0) {
+        alert("⚠️ Salve pelo menos um serviço!");
+        return;
+    }
+
+    let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
+    mensagem += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+    mensagem += `👤 *Cliente:* ${numero}\n\n`;
+    mensagem += `📌 *SERVIÇOS:*\n`;
+
+    todosOsServicos.forEach((servico, index) => {
+        mensagem += `\n${index + 1}. *${servico.servico}*\n`;
+        mensagem += `   📏 Medida: ${servico.medida}\n`;
+        mensagem += `   💰 Valor: ${servico.valor}\n`;
+    });
+
+    mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+    window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
+    alert("✅ Orçamento enviado!");
+}
+
+function irParaProximo() {
+    window.location.href = "02-reboco.html";
+}
+
+function voltar() {
+    // ✅ CORRIGIDO: Sobe da pasta servicos/ e volta para a página principal
+    window.location.href = "../index.html";
+}
+</script>
+
 </body>
 </html>
