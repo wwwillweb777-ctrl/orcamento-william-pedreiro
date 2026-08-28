@@ -64,7 +64,7 @@
         <button class="btn btn-comecar" onclick="comecar()">Entrar</button>
     </div>
 
-    <!-- PÁGINA DE SERVIÇOS — ORDEM CORRIGIDA! -->
+    <!-- PÁGINA DE SERVIÇOS — NOMES IGUAIS AO GITHUB! -->
     <div id="pg-servicos" class="pagina oculta">
         <h1>Qual serviço será feito?</h1>
         <button class="btn btn-servico" onclick="irPara('servicos/01-alvenaria.html')">1 - ALVENARIA (R$52,00/M²)</button>
@@ -72,7 +72,7 @@
         <button class="btn btn-servico" onclick="irPara('servicos/03-porcelanato.html')">3 - PORCELANATO (R$60,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/04-ceramica.html')">4 - CERÂMICA (R$40,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/05-concreto.html')">5 - CONCRETO (R$200,00/M³)</button>
-        <button class="btn btn-servico" onclick="irPara('servicos/06-calculadora-tijolos.html')">6 - 🧱 CALC. QUANTIDADE DE TIJOLOS</button>
+        <button class="btn btn-servico" onclick="irPara('servicos/06-calculadora.tijolos.html')">6 - 🧱 CALC. QUANTIDADE DE TIJOLOS</button>
         <button class="btn btn-servico" onclick="irPara('servicos/07-gesso.html')">7 - ⬜ GESSO (R$20,00/M²)</button>
         <button class="btn btn-servico" onclick="irPara('servicos/08-resumo-geral.html')">📊 8 - RESUMO GERAL / ORÇAMENTO FINAL</button>
         <button class="btn btn-voltar" onclick="voltarParaPrincipal()">VOLTAR</button>
@@ -112,7 +112,6 @@
         const CHAVE_PIX = "williamempreiteiro007@gmail.com";
         const SENHA_LIBERACAO = "12345";
 
-        // ✅ Salva a liberação no navegador — senha pede SÓ UMA vez!
         function verificarLiberacao() {
             return localStorage.getItem('liberado') === 'sim';
         }
@@ -131,7 +130,6 @@
 
         function comecar() {
             localStorage.removeItem('orcamentoCompleto');
-            // ✅ Se já liberado, vai direto — sem pedir senha!
             if (verificarLiberacao()) {
                 mostrarPagina('pg-servicos');
             } else {
@@ -140,14 +138,12 @@
         }
 
         function voltarParaPrincipal() { 
-            // ✅ Só reseta senha se VOLTAR PARA A TELA DO LEÃO!
             resetarLiberacao();
             mostrarPagina('pg-principal'); 
         }
         function voltarParaServicos() { mostrarPagina('pg-servicos'); }
 
         function irPara(url) {
-            // ✅ Se já liberado, vai direto — sem pedir senha de novo!
             if (verificarLiberacao()) {
                 window.location.href = url;
             } else {
@@ -172,7 +168,7 @@
         function validarSenha() {
             const s = document.getElementById('campo-senha').value.trim();
             if (s === SENHA_LIBERACAO) {
-                liberarAcesso(); // ✅ Marca como liberado!
+                liberarAcesso();
                 alert("✅ Acesso LIBERADO! 🎉");
                 mostrarPagina('pg-servicos');
             } else {
@@ -181,7 +177,6 @@
             }
         }
 
-        // ✅ Reconhece o #pg-servicos e abre direto na tela dos 8 botões!
         window.addEventListener('load', function() {
             if (window.location.hash === '#pg-servicos') {
                 mostrarPagina('pg-servicos');
