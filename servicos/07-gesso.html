@@ -22,7 +22,6 @@
         .btn-calcular { background: #ff8800; }
         .btn-salvar { background: #17a2b8; }
         .btn-whatsapp { background: #25d366; }
-        .btn-proximo { background: #0047ab; }
         .btn-resumo { background: #9c27b0; }
         .btn-voltar { background: #d32f2f; }
         
@@ -39,9 +38,6 @@
         
         .campo-whats { background: rgba(255,255,255,0.1); border: 2px solid #25d366; border-radius: 10px; padding: 15px; margin-top: 20px; display: none; }
         .campo-whats label { margin-top: 0; color: #25d366; }
-        
-        .navegacao { display: flex; gap: 10px; margin-top: 20px; }
-        .navegacao .btn { flex: 1; }
     </style>
 </head>
 <body>
@@ -115,11 +111,8 @@
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ FINALIZAR E ENVIAR ORÇAMENTO</button>
     </div>
 
-    <!-- ✅ NAVEGAÇÃO CORRIGIDA! -->
-    <div class="navegacao">
-        <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
-        <button class="btn btn-proximo" onclick="irParaProximo()">PRÓXIMO ➡️</button>
-    </div>
+    <!-- ✅ SEM BOTÃO PRÓXIMO — SÓ VOLTAR E RESUMO GERAL! -->
+    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
     <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
 </div>
 
@@ -235,11 +228,6 @@ function enviarWhatsApp() {
 // ✅ VOLTAR → Calculadora de Tijolos (06)
 function voltar() {
     window.location.href = "06-calculadora.tijolos.html";
-}
-
-// ✅ PRÓXIMO → Resumo Geral (08)
-function irParaProximo() {
-    window.location.href = "08-resumo-geral.html";
 }
 </script>
 
