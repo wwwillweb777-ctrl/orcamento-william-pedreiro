@@ -108,8 +108,6 @@
 
     <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
     <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
-    
-    <!-- ✅ BOTÃO DE RESUMO GERAL JÁ INCLUÍDO! -->
     <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
 
     <div class="campo-whats" id="area-whats">
@@ -118,8 +116,8 @@
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ CONFIRMAR E ENVIAR</button>
     </div>
 
-    <button class="btn btn-proximo" onclick="irParaProximo()">➡️ PRÓXIMO</button>
-    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
+    <button class="btn btn-proximo" onclick="irParaProximo()">PRÓXIMO</button>
+    <button class="btn btn-voltar" onclick="voltar()">VOLTAR</button>
 </div>
 
 <script>
@@ -193,13 +191,13 @@ function enviarWhatsApp() {
 
     const todosOsServicos = JSON.parse(localStorage.getItem('orcamentoCompleto') || '[]');
     
-    if(todosOsServicos.length === 0 && !dadosSalvos) {
-        alert("⚠️ Salve pelo menos um serviço!");
-        return;
-    }
-
     if(dadosSalvos && !todosOsServicos.find(s => s.servico === dadosSalvos.servico)) {
         todosOsServicos.push(dadosSalvos);
+    }
+
+    if(todosOsServicos.length === 0) {
+        alert("⚠️ Salve pelo menos um serviço!");
+        return;
     }
 
     let mensagem = `📋 *ORÇAMENTO COMPLETO — WILLIAM PEDREIRO*\n`;
@@ -216,15 +214,17 @@ function enviarWhatsApp() {
     mensagem += `\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
 
     window.open(`https://wa.me/${SEU_NUMERO}?text=${encodeURIComponent(mensagem)}`, '_blank');
-    alert("✅ Orçamento completo! Abrindo WhatsApp...");
+    alert("✅ Orçamento enviado!");
 }
 
+// ✅ PRÓXIMO → Reboco (mesma pasta)
 function irParaProximo() {
     window.location.href = "02-reboco.html";
 }
 
+// ✅ VOLTAR → Tela de Serviços (não pede pagamento de novo!)
 function voltar() {
-    window.history.back();
+    window.location.href = "../index.html#pg-servicos";
 }
 </script>
 
