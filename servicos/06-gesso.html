@@ -22,7 +22,8 @@
         .btn-calcular { background: #ff8800; }
         .btn-salvar { background: #17a2b8; }
         .btn-whatsapp { background: #25d366; }
-        .btn-finalizar { background: #9c27b0; }
+        .btn-proximo { background: #0047ab; }
+        .btn-resumo { background: #9c27b0; }
         .btn-voltar { background: #d32f2f; }
         
         .resultado { background: rgba(0,0,0,0.3); border: 2px solid #ffcc00; border-radius: 10px; padding: 20px; margin-top: 25px; text-align: center; font-size: 20px; line-height: 2; color: #fff; display: none; }
@@ -38,6 +39,9 @@
         
         .campo-whats { background: rgba(255,255,255,0.1); border: 2px solid #25d366; border-radius: 10px; padding: 15px; margin-top: 20px; display: none; }
         .campo-whats label { margin-top: 0; color: #25d366; }
+        
+        .navegacao { display: flex; gap: 10px; margin-top: 20px; }
+        .navegacao .btn { flex: 1; }
     </style>
 </head>
 <body>
@@ -111,15 +115,18 @@
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ FINALIZAR E ENVIAR ORÇAMENTO</button>
     </div>
 
-    <!-- ✅ BOTÃO CORRIGIDO — VAI DIRETO PARA O RESUMO GERAL! -->
-    <button class="btn btn-finalizar" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
+    <!-- ✅ BOTÕES DE NAVEGAÇÃO CORRIGIDOS! -->
+    <div class="navegacao">
+        <button class="btn btn-proximo" onclick="irParaProximo()">➡️ PRÓXIMO (7/8)</button>
+    </div>
+    <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
     <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
 </div>
 
 <script>
 const PRECO_M2 = 20;
 const SEU_NUMERO = "5531990721928";
-const TOTAL_ETAPAS = 6;
+const TOTAL_ETAPAS = 8;
 
 let dadosSalvos = null;
 
@@ -230,8 +237,14 @@ function enviarWhatsApp() {
     alert("✅ Orçamento completo enviado!");
 }
 
+// ✅ CORRIGIDO: PRÓXIMO vai para a Calculadora de Tijolos!
+function irParaProximo() {
+    window.location.href = "07-calculadora-tijolos.html";
+}
+
+// ✅ CORRIGIDO: VOLTAR vai direto para a tela dos 8 botões!
 function voltar() {
-    window.history.back();
+    window.location.href = "../index.html#pg-servicos";
 }
 </script>
 
