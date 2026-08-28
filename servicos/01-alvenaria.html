@@ -47,7 +47,7 @@
 <body>
 
 <div class="pagina">
-    <h1>🧱 ALVENARIA</h1>
+    <h1>🧱 Assentamento de tijolos</h1>
 
     <div class="regra-importante">
         ⚠️ <strong>REGRA OBRIGATÓRIA!</strong><br>
@@ -76,7 +76,7 @@
     <button class="btn btn-calcular" onclick="calcular()">CALCULAR VALOR</button>
 
     <div class="resultado" id="resultado">
-        <p><strong>Serviço:</strong> ALVENARIA</p>
+        <p><strong>Serviço:</strong> Assentamento de tijolos</p>
         <p><strong>Área Total:</strong> <span id="area" class="valor-final">0,00</span> m²</p>
         <p class="preco-unitario">Preço: R$ 52,00 por m²</p>
         <p><strong>Valor Total:</strong> <span id="valor" class="valor-final">R$ 0,00</span></p>
@@ -155,7 +155,7 @@ function calcular() {
     document.getElementById('resultado').style.display = 'block';
 
     dadosSalvos = {
-        servico: "ALVENARIA",
+        servico: "Assentamento de tijolos",
         medida: formatarNumero(area) + ' m²',
         valor: 'R$ ' + formatarNumero(valor)
     };
