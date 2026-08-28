@@ -123,14 +123,16 @@
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ CONFIRMAR E ENVIAR</button>
     </div>
 
-    <button class="btn btn-proximo" onclick="irParaProximo()">➡️ PRÓXIMO </button>
-    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <button class="btn btn-voltar" onclick="voltar()" style="flex: 1;">⬅️ VOLTAR</button>
+        <button class="btn btn-proximo" onclick="irParaProximo()" style="flex: 1;">➡️ PRÓXIMO</button>
+    </div>
 </div>
 
 <script>
 const PRECO_M3 = 200;
 const SEU_NUMERO = "5531990721928";
-const TOTAL_ETAPAS = 7;
+const TOTAL_ETAPAS = 8;
 
 let dadosSalvos = null;
 
@@ -235,10 +237,12 @@ function enviarWhatsApp() {
     alert("✅ Orçamento completo! Abrindo WhatsApp...");
 }
 
+// ✅ CORRIGIDO: PRÓXIMO → Calculadora de Tijolos (06)
 function irParaProximo() {
-    window.location.href = "07-calculadora-tijolos.html";
+    window.location.href = "06-calculadora.tijolos.html";
 }
 
+// ✅ CORRIGIDO: VOLTAR → Cerâmica (04)
 function voltar() {
     window.location.href = "04-ceramica.html";
 }
