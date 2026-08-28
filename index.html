@@ -162,9 +162,9 @@
             }
         }
 
-        // ✅ NOVO: Abre direto na tela de serviços quando vier do VOLTAR
+        // ✅ CORRIGIDO: Reconhece #pg-servicos e abre direto na tela dos 8 botões!
         window.addEventListener('load', function() {
-            if (window.location.hash === '#servicos') {
+            if (window.location.hash === '#pg-servicos') {
                 mostrarPagina('pg-servicos');
             }
         });
