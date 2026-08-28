@@ -105,8 +105,6 @@
 
     <button class="btn btn-salvar" onclick="salvarItem()">💾 SALVAR</button>
     <button class="btn btn-whatsapp" onclick="mostrarCampoWhatsApp()">📲 ENVIAR PELO WHATSAPP</button>
-    
-    <!-- ✅ BOTÃO DE RESUMO GERAL ADICIONADO! -->
     <button class="btn btn-resumo" onclick="window.location.href='08-resumo-geral.html'">📊 VER RESUMO GERAL</button>
 
     <div class="campo-whats" id="area-whats">
@@ -115,8 +113,8 @@
         <button class="btn btn-whatsapp" onclick="enviarWhatsApp()">✅ CONFIRMAR E ENVIAR</button>
     </div>
 
-    <button class="btn btn-proximo" onclick="irParaProximo()">➡️ PRÓXIMO</button>
-    <button class="btn btn-voltar" onclick="voltar()">⬅️ VOLTAR</button>
+    <button class="btn btn-proximo" onclick="irParaProximo()">PRÓXIMO</button>
+    <button class="btn btn-voltar" onclick="voltar()">VOLTAR</button>
 </div>
 
 <script>
@@ -231,7 +229,7 @@ function irParaProximo() {
 }
 
 function voltar() {
-    window.history.back();
+    window.location.href = "02-reboco.html";
 }
 </script>
 
